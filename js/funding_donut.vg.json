@@ -2,7 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Conservation Authority Share",
   "width": "container",
-  "height": 250,
+  "height": 300,
+  "autosize": {"type": "fit", "contains": "padding"},
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
@@ -20,10 +21,18 @@
       "filter": "datum.rank <= 10"
     }
   ],
-  "mark": {"type": "arc", "innerRadius": 50},
+  "mark": {"type": "arc", "innerRadius": 60},
   "encoding": {
     "theta": {"field": "count", "type": "quantitative"},
-    "color": {"field": "AUTHORITY", "type": "nominal", "legend": {"orient": "bottom", "columns": 2}},
+    "color": {
+      "field": "AUTHORITY", 
+      "type": "nominal", 
+      "legend": {
+        "orient": "right",
+        "title": "Authority",
+        "labelLimit": 100
+      }
+    },
     "tooltip": [
       {"field": "AUTHORITY", "type": "nominal", "title": "Authority"},
       {"field": "count", "type": "quantitative", "title": "Count"}

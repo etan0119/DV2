@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Top 15 Protected Area Types by Frequency",
   "width": "container",
-  "height": 400,
+  "height": 500,
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
