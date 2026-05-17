@@ -1,6 +1,10 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Distribution of Protected Areas by IUCN Management Category",
+  "title": {
+    "text": "Stewardship Levels: Protected Area Counts",
+    "subtitle": "Distribution across IUCN Management Categories",
+    "anchor": "start"
+  },
   "width": "container",
   "height": 400,
   "data": {
@@ -17,23 +21,24 @@
     "x": {
       "field": "IUCN",
       "type": "nominal",
-      "title": "IUCN Category",
-      "sort": ["Ia", "Ib", "II", "III", "IV", "V", "VI"]
+      "title": "IUCN Management Category",
+      "sort": ["Ia", "Ib", "II", "III", "IV", "V", "VI"],
+      "axis": {"labelAngle": 0}
     },
     "y": {
       "aggregate": "count",
       "type": "quantitative",
-      "title": "Number of Protected Areas"
+      "title": "Number of Sites"
     },
     "color": {
       "field": "IUCN",
       "type": "nominal",
-      "scale": {"scheme": "viridis"},
+      "scale": {"scheme": "greens"},
       "legend": null
     },
     "tooltip": [
-      {"field": "IUCN", "type": "nominal", "title": "IUCN Category"},
-      {"aggregate": "count", "type": "quantitative", "title": "Count"}
+      {"field": "IUCN", "type": "nominal", "title": "Category"},
+      {"aggregate": "count", "type": "quantitative", "title": "Total Protected Areas"}
     ]
   }
 }

@@ -20,17 +20,27 @@
 
   <main class="dashboard">
     <header>
-      <h1>Australia's Biodiversity Crisis</h1>
-      <p>The Race to Protect Our Unique Wildlife through the Collaborative Australian Protected Areas Database (CAPAD)</p>
+      <h1>The Illusion of Sanctuary?</h1>
+      <p>Investigating the gap between Australia's expanding protected areas and the ongoing decline of its most vulnerable species.</p>
     </header>
 
     <!-- Map Section -->
     <section class="chart-section">
       <div id="capad_full" class="chart-container chart-container-large map-container"></div>
       <div class="text-block">
-        <h2>The Grand Sanctuary</h2>
-        <p>Australia is one of the world's most "megadiverse" nations. Our vast landscapes and surrounding oceans are home to species found nowhere else on Earth.</p>
-        <p>The <strong>CAPAD</strong> framework maps out the sanctuaries where nature is given a fighting chance. From the rugged Outback to the vibrant Great Barrier Reef, these are the lines we've drawn in the sand to protect life.</p>
+        <h2>Geography of Protection</h2>
+        <p>Australia has set aside over <strong>22%</strong> of its landmass for conservation. However, the spatial distribution revealed in the CAPAD map shows a significant bias. Most large-scale protected areas are located in "low-opportunity" regions—vast deserts and arid zones where land use conflict is minimal.</p>
+        <p>While these <strong>Terrestrial Reserves (Green)</strong> and <strong>Marine Sanctuaries (Blue)</strong> look impressive, high-biodiversity regions like fertile coastal plains remain under-represented, leaving many critical ecosystems vulnerable to continued development.</p>
+      </div>
+    </section>
+
+    <!-- TSX Paradox Section (New) -->
+    <section class="chart-section">
+      <div id="tsx_decline_chart" class="chart-container chart-container-large"></div>
+      <div class="text-block">
+        <h2>The Paradox of Protection</h2>
+        <p>A critical look at the data reveals a troubling trend: while the <em>area</em> of protected land is increasing, the <em>abundance</em> of threatened species continues to plummet. Since 1985, threatened birds, mammals, and plants have seen average declines of <strong>59% to 73%</strong>.</p>
+        <p>This suggests that merely drawing lines on a map is insufficient. Invasive species, climate change, and inappropriate fire regimes cross park boundaries, proving that designation without active, well-funded management fails to stop the slide toward extinction.</p>
       </div>
     </section>
 
@@ -38,9 +48,9 @@
     <section class="chart-section">
       <div id="area_growth_chart" class="chart-container chart-container-large"></div>
       <div class="text-block">
-        <h2>A Legacy of Growth</h2>
-        <p>Since the early 20th century, our commitment to conservation has scaled significantly. tracing the cumulative growth reveals the nation's evolving commitment to environmental stewardship.</p>
-        <p>Use the dropdown below the chart to explore how individual states have contributed to this expanding national network.</p>
+        <h2>Expansion Metrics</h2>
+        <p>The cumulative growth of CAPAD shows a massive scaling of the network, particularly after the <strong>EPBC Act of 1999</strong>. Nationally, the network has nearly doubled in the last two decades.</p>
+        <p>However, analysts point out that this "Quantity over Quality" approach has left approximately <strong>160 threatened species</strong> with almost no habitat within the protected area system. The growth in acreage has not yet translated into adequate representation for our most at-risk wildlife.</p>
       </div>
     </section>
 
@@ -48,9 +58,9 @@
     <section class="chart-section">
       <div id="threatened_species_chart" class="chart-container chart-container-large"></div>
       <div class="text-block">
-        <h2>The Spectrum of Care</h2>
-        <p>Not all protected areas are managed the same way. The <strong>IUCN Management Categories</strong> define the strictness of our stewardship.</p>
-        <p>From strict nature reserves to managed resource areas, this breakdown underscores the varying strategies required to prevent the loss of our most iconic species.</p>
+        <h2>Management Categories</h2>
+        <p>The IUCN categories (Ia to VI) determine what activities are permitted within a reserve. Data shows that many areas are designated as <strong>Category VI</strong>, which allows for multiple uses, including some resource extraction.</p>
+        <p>Only a small fraction of the CAPAD network consists of <strong>Strict Nature Reserves (Ia)</strong>. Without the highest level of protection, many areas remain vulnerable to secondary threats that parks are ostensibly designed to prevent.</p>
       </div>
     </section>
 
@@ -58,37 +68,37 @@
     <section class="chart-section">
       <div id="gap_analysis_chart" class="chart-container chart-container-large"></div>
       <div class="text-block">
-        <h2>Identifying the Gaps</h2>
-        <p>By analyzing protected area size against latitude, we can identify "blind spots" in our ecological network. Are certain zones being left behind?</p>
-        <p>Large, connected corridors are essential for species migration and survival in the face of climate change.</p>
+        <h2>Ecological Blind Spots</h2>
+        <p>Gap analysis identifies regions rich in biodiversity that lack formal protection. The current system shows a "latitudinal bias," where temperate biodiversity hotspots in the south often have smaller, more fragmented reserves compared to the massive blocks in the north.</p>
+        <p>For a protected area network to be effective, it must be <strong>Comprehensive, Adequate, and Representative (CAR)</strong>. The scatter plot highlights that many ecologically unique regions still fall through the cracks of the current framework.</p>
       </div>
     </section>
 
     <!-- Grid Section for Smaller Charts -->
     <div class="grid-section">
       <div class="chart-card">
-        <h3>Conservation Authority Share</h3>
+        <h3>Administrative Distribution</h3>
         <div id="funding_donut_chart" class="chart-container"></div>
-        <p class="chart-description">Understand which national and state authorities manage our protected areas and coordinate resources.</p>
+        <p class="chart-description">Management is split across state and national agencies. Inconsistent funding and management goals across borders can hinder species recovery.</p>
       </div>
       
       <div class="chart-card">
-        <h3>Protection by State & Environment</h3>
+        <h3>State-wise Representation</h3>
         <div id="threat_density_heatmap" class="chart-container"></div>
-        <p class="chart-description">Analyzing the distribution of protected areas across environment types (Marine vs Terrestrial) by state.</p>
+        <p class="chart-description">Each state manages a different mix of environments. Discrepancies in state-level protection leave trans-border species at risk.</p>
       </div>
 
       <div class="chart-card full-width">
-        <h3>Composition of Protected Area Types</h3>
+        <h3>Categorical Breakdown</h3>
         <div id="conservation_treemap" class="chart-container"></div>
-        <p class="chart-description">From National Parks to Nature Refuges, the variety of protection types reflects Australia's diverse conservation strategies.</p>
+        <p class="chart-description">The variety of protection types shows the complexity of the system. Critics argue that this complexity often masks a lack of cohesive national strategy.</p>
       </div>
     </div>
 
     <footer class="dashboard-footer">
       <div class="footer-col">
         <h3>Data Credits</h3>
-        <p>Source: Collaborative Australian Protected Areas Database (CAPAD)</p>
+        <p>Source: Collaborative Australian Protected Areas Database (CAPAD) & Threatened Species Index (TSX)</p>
         <p>Created by: [Student Name]</p>
         <p>Date: May 2026</p>
       </div>
@@ -103,6 +113,9 @@
   <script type="text/javascript">
     // Geographic Map
     vegaEmbed('#capad_full', "js/capad_full.vg.json").catch(console.error);
+
+    // Paradox of Protection
+    vegaEmbed('#tsx_decline_chart', "js/tsx_decline.vg.json").catch(console.error);
 
     // Area Growth Chart
     vegaEmbed('#area_growth_chart', "js/area_growth.vg.json").catch(console.error);
