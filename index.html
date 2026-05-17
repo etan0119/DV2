@@ -56,21 +56,37 @@
 
     <!-- Threatened Species / IUCN Section -->
     <section class="chart-section">
-      <div id="threatened_species_chart" class="chart-container chart-container-large"></div>
+      <div class="chart-container-wrapper chart-container-large">
+        <div id="threatened_species_chart" class="chart-container"></div>
+        <p class="chart-note"><strong>Note:</strong> Darker shades of green represent stricter IUCN protection categories (e.g., Ia), while lighter shades represent categories that allow for sustainable resource use (e.g., VI).</p>
+      </div>
       <div class="text-block">
-        <h2>Management Categories</h2>
-        <p>The IUCN categories (Ia to VI) determine what activities are permitted within a reserve. Data shows that many areas are designated as <strong>Category VI</strong>, which allows for multiple uses, including some resource extraction.</p>
-        <p>Only a small fraction of the CAPAD network consists of <strong>Strict Nature Reserves (Ia)</strong>. Without the highest level of protection, many areas remain vulnerable to secondary threats that parks are ostensibly designed to prevent.</p>
+        <h2>The Scale of Restriction</h2>
+        <p>The IUCN categories (Ia to VI) define how strictly a sanctuary is guarded. While the bar chart shows over <strong>2,800</strong> sites designated as Strict Nature Reserves (Ia), these are often small, isolated pockets. In reality, the true scale of protection is found elsewhere.</p>
+        <p>Data reveals that over <strong>100 million hectares</strong>—the vast majority of Australia's protected territory—falls under <strong>Category VI</strong>. In these massive zones, conservation must compete with resource management and human use. This reliance on less restrictive management categories may be a key reason why many species continue to slide toward extinction despite the growth of the map.</p>
       </div>
     </section>
 
-    <!-- Gap Analysis Section -->
-    <section class="chart-section">
-      <div id="gap_analysis_chart" class="chart-container chart-container-large"></div>
-      <div class="text-block">
-        <h2>Ecological Blind Spots</h2>
-        <p>Gap analysis identifies regions rich in biodiversity that lack formal protection. The current system shows a "latitudinal bias," where temperate biodiversity hotspots in the south often have smaller, more fragmented reserves compared to the massive blocks in the north.</p>
-        <p>For a protected area network to be effective, it must be <strong>Comprehensive, Adequate, and Representative (CAR)</strong>. The scatter plot highlights that many ecologically unique regions still fall through the cracks of the current framework.</p>
+    <!-- Gap Analysis Section (Scrollytelling) -->
+    <section class="scrolly-section">
+      <div class="scrolly-container">
+        <div class="scrolly-visual">
+          <div id="gap_analysis_chart" class="chart-container" style="height: 100%;"></div>
+        </div>
+        <div class="scrolly-narrative">
+          <div class="scrolly-step">
+            <h2>Distorting the Distance</h2>
+            <p>The divide between land and sea reveals a striking geographical imbalance. While the mainland shows a clear trend of massive reserves in the north giving way to smaller, fragmented pockets in the south, this "latitudinal bias" is more complex than it first appears.</p>
+          </div>
+          <div class="scrolly-step">
+            <h3>The Remote Distortion</h3>
+            <p>The inclusion of <strong>External Territories</strong> and massive offshore <strong>Commonwealth Marine Parks</strong> creates a visual distortion. These remote sanctuaries, such as the Coral Sea and sub-Antarctic Macquarie Island, operate at a scale that dwarfs typical mainland efforts.</p>
+          </div>
+          <div class="scrolly-step">
+            <h3>The Mainland Crisis</h3>
+            <p>By separating these environments, we can pinpoint the true mainland crisis: our most biodiverse temperate regions in the south are relying on a fragile network of tiny "postage-stamp" sanctuaries. Only the vast arid north provides the landscape-scale protection necessary for species to survive climate shifts.</p>
+          </div>
+        </div>
       </div>
     </section>
 

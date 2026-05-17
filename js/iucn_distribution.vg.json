@@ -1,44 +1,117 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "Stewardship Levels: Protected Area Counts",
-    "subtitle": "Distribution across IUCN Management Categories",
-    "anchor": "start"
+    "text": "The Count vs. Area Paradox",
+    "subtitle": "Comparing number of sites against total protected area (Hectares)",
+    "anchor": "start",
+    "offset": 20
   },
-  "width": "container",
-  "height": 400,
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
   },
   "transform": [
     {
-      "filter": "datum.IUCN != null && datum.IUCN != '' && datum.IUCN != 'null'"
+      "filter": "datum.IUCN != null && datum.IUCN != '' && datum.IUCN != 'null' && datum.IUCN != 'NAS' && datum.IUCN != 'NA'"
+    },
+    {
+      "calculate": "datum.IUCN == 'Ia' ? 'Ia: Strict Nature Reserve' : datum.IUCN == 'Ib' ? 'Ib: Wilderness Area' : datum.IUCN == 'II' ? 'II: National Park' : datum.IUCN == 'III' ? 'III: Natural Monument' : datum.IUCN == 'IV' ? 'IV: Habitat/Species Management' : datum.IUCN == 'V' ? 'V: Protected Landscape' : 'VI: Managed Resource Area'",
+      "as": "IUCN_Description"
     }
   ],
-  "mark": "bar",
-  "encoding": {
-    "x": {
-      "field": "IUCN",
-      "type": "nominal",
-      "title": "IUCN Management Category",
-      "sort": ["Ia", "Ib", "II", "III", "IV", "V", "VI"],
-      "axis": {"labelAngle": 0}
+  "hconcat": [
+    {
+      "title": "Site Count",
+      "width": 250,
+      "height": 350,
+      "mark": "bar",
+      "encoding": {
+        "x": {
+          "field": "IUCN",
+          "type": "nominal",
+          "title": "Category",
+          "sort": ["Ia", "Ib", "II", "III", "IV", "V", "VI"],
+          "axis": {"labelAngle": 0}
+        },
+        "y": {
+          "aggregate": "count",
+          "type": "quantitative",
+          "title": "Number of Sites"
+        },
+        "color": {
+          "field": "IUCN_Description",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Ia: Strict Nature Reserve", 
+              "Ib: Wilderness Area", 
+              "II: National Park", 
+              "III: Natural Monument", 
+              "IV: Habitat/Species Management", 
+              "V: Protected Landscape", 
+              "VI: Managed Resource Area"
+            ],
+            "range": ["#00441b", "#006d2c", "#238b45", "#41ab5d", "#74c476", "#a1d99b", "#c7e9c0"]
+          },
+          "legend": {
+            "title": "Strictness Level (Darkest = Most Strict)",
+            "orient": "bottom",
+            "columns": 2,
+            "offset": 40,
+            "titleLimit": 400,
+            "labelLimit": 300
+          }
+        },
+        "tooltip": [
+          {"field": "IUCN_Description", "type": "nominal", "title": "Category"},
+          {"aggregate": "count", "type": "quantitative", "title": "Total Sites"}
+        ]
+      }
     },
-    "y": {
-      "aggregate": "count",
-      "type": "quantitative",
-      "title": "Number of Sites"
-    },
-    "color": {
-      "field": "IUCN",
-      "type": "nominal",
-      "scale": {"scheme": "greens"},
-      "legend": null
-    },
-    "tooltip": [
-      {"field": "IUCN", "type": "nominal", "title": "Category"},
-      {"aggregate": "count", "type": "quantitative", "title": "Total Protected Areas"}
-    ]
+    {
+      "title": "Total Area (Hectares)",
+      "width": 250,
+      "height": 350,
+      "mark": "bar",
+      "encoding": {
+        "x": {
+          "field": "IUCN",
+          "type": "nominal",
+          "title": "Category",
+          "sort": ["Ia", "Ib", "II", "III", "IV", "V", "VI"],
+          "axis": {"labelAngle": 0}
+        },
+        "y": {
+          "field": "GIS_AREA",
+          "aggregate": "sum",
+          "type": "quantitative",
+          "title": "Total Area (ha)"
+        },
+        "color": {
+          "field": "IUCN_Description",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Ia: Strict Nature Reserve", 
+              "Ib: Wilderness Area", 
+              "II: National Park", 
+              "III: Natural Monument", 
+              "IV: Habitat/Species Management", 
+              "V: Protected Landscape", 
+              "VI: Managed Resource Area"
+            ],
+            "range": ["#00441b", "#006d2c", "#238b45", "#41ab5d", "#74c476", "#a1d99b", "#c7e9c0"]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {"field": "IUCN_Description", "type": "nominal", "title": "Category"},
+          {"field": "GIS_AREA", "aggregate": "sum", "type": "quantitative", "title": "Total Area (ha)", "format": ","}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {"stroke": null}
   }
 }

@@ -1,8 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Gap Analysis: Protection Area vs. Latitude",
-  "width": "container",
-  "height": 400,
+  "title": {
+    "text": "Gap Analysis: Terrestrial vs. Marine Latitudinal Trends",
+    "subtitle": "Mean Area trend per latitude (Log Scale)",
+    "anchor": "start",
+    "offset": 20
+  },
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
@@ -14,30 +17,142 @@
     {
       "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE == 'EXT' ? 'External Territory' : datum.STATE",
       "as": "State_Full"
+    },
+    {
+      "calculate": "datum.ENVIRON == 'T' ? 'Terrestrial' : 'Marine'",
+      "as": "Env_Full"
+    },
+    {
+      "calculate": "floor(datum.LATITUDE)",
+      "as": "Lat_Bin"
     }
   ],
-  "mark": {"type": "point", "opacity": 0.5, "filled": true},
-  "encoding": {
-    "x": {
-      "field": "LATITUDE",
-      "type": "quantitative",
-      "title": "Latitude (Degrees South)"
+  "hconcat": [
+    {
+      "title": "Terrestrial Reserves",
+      "transform": [{"filter": "datum.Env_Full == 'Terrestrial'"}],
+      "width": 260,
+      "height": 400,
+      "layer": [
+        {
+          "params": [
+            {
+              "name": "State_Selection",
+              "select": {"type": "point", "fields": ["State_Full"]},
+              "bind": "legend"
+            }
+          ],
+          "mark": {"type": "point", "filled": true},
+          "encoding": {
+            "x": {
+              "field": "LATITUDE",
+              "type": "quantitative",
+              "title": "Latitude (Degrees South)"
+            },
+            "y": {
+              "field": "GIS_AREA",
+              "type": "quantitative",
+              "scale": {"type": "log"},
+              "title": "Area (ha, Log Scale)"
+            },
+            "color": {
+              "field": "State_Full",
+              "type": "nominal",
+              "legend": {"orient": "right", "title": "State/Territory", "titleLimit": 200}
+            },
+            "opacity": {
+              "condition": {"param": "State_Selection", "value": 0.3},
+              "value": 0.05
+            },
+            "size": {"value": 15},
+            "tooltip": [
+              {"field": "NAME", "type": "nominal", "title": "Name"},
+              {"field": "State_Full", "type": "nominal", "title": "State"},
+              {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
+            ]
+          }
+        },
+        {
+          "transform": [
+            {"filter": {"param": "State_Selection"}},
+            {
+              "aggregate": [{"op": "mean", "field": "GIS_AREA", "as": "Mean_Area"}],
+              "groupby": ["Lat_Bin"]
+            }
+          ],
+          "mark": {
+            "type": "line",
+            "strokeWidth": 3,
+            "opacity": 0.8,
+            "color": "#d95f02"
+          },
+          "encoding": {
+            "x": {"field": "Lat_Bin", "type": "quantitative"},
+            "y": {"field": "Mean_Area", "type": "quantitative"}
+          }
+        }
+      ]
     },
-    "y": {
-      "field": "GIS_AREA",
-      "type": "quantitative",
-      "scale": {"type": "log"},
-      "title": "Protected Area Size (ha, Log Scale)"
-    },
-    "color": {
-      "field": "State_Full",
-      "type": "nominal",
-      "title": "State/Territory"
-    },
-    "tooltip": [
-      {"field": "NAME", "type": "nominal", "title": "Name"},
-      {"field": "State_Full", "type": "nominal", "title": "State"},
-      {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
-    ]
+    {
+      "title": "Marine Sanctuaries",
+      "transform": [{"filter": "datum.Env_Full == 'Marine'"}],
+      "width": 260,
+      "height": 400,
+      "layer": [
+        {
+          "mark": {"type": "point", "filled": true},
+          "encoding": {
+            "x": {
+              "field": "LATITUDE",
+              "type": "quantitative",
+              "title": "Latitude (Degrees South)"
+            },
+            "y": {
+              "field": "GIS_AREA",
+              "type": "quantitative",
+              "scale": {"type": "log"},
+              "title": null
+            },
+            "color": {
+              "field": "State_Full",
+              "type": "nominal",
+              "legend": null
+            },
+            "opacity": {
+              "condition": {"param": "State_Selection", "value": 0.3},
+              "value": 0.05
+            },
+            "size": {"value": 15},
+            "tooltip": [
+              {"field": "NAME", "type": "nominal", "title": "Name"},
+              {"field": "State_Full", "type": "nominal", "title": "State"},
+              {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
+            ]
+          }
+        },
+        {
+          "transform": [
+            {"filter": {"param": "State_Selection"}},
+            {
+              "aggregate": [{"op": "mean", "field": "GIS_AREA", "as": "Mean_Area"}],
+              "groupby": ["Lat_Bin"]
+            }
+          ],
+          "mark": {
+            "type": "line",
+            "strokeWidth": 3,
+            "opacity": 0.8,
+            "color": "#d95f02"
+          },
+          "encoding": {
+            "x": {"field": "Lat_Bin", "type": "quantitative"},
+            "y": {"field": "Mean_Area", "type": "quantitative"}
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "view": {"stroke": null}
   }
 }
