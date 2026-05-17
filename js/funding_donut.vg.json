@@ -10,8 +10,12 @@
   },
   "transform": [
     {
+      "calculate": "datum.AUTHORITY == 'VIC_DEECA' ? 'DEECA (Victoria)' : datum.AUTHORITY == 'NRE_TAS' ? 'NRE (Tasmania)' : datum.AUTHORITY == 'SA_DEW' ? 'DEW (South Australia)' : datum.AUTHORITY == 'WA_DBCA' ? 'DBCA (Western Australia)' : datum.AUTHORITY == 'QLD_DES' ? 'DES (Queensland)' : datum.AUTHORITY == 'NSW_DCCEEW' ? 'DCCEEW (NSW)' : datum.AUTHORITY == 'DCCEEW' ? 'DCCEEW (Commonwealth)' : datum.AUTHORITY == 'ACT_EPSDD' ? 'EPSDD (ACT)' : datum.AUTHORITY == 'TAS_PRIV' ? 'Private (Tasmania)' : datum.AUTHORITY == 'NT_PWCNT' ? 'Parks & Wildlife (NT)' : datum.AUTHORITY",
+      "as": "Authority_Full"
+    },
+    {
       "aggregate": [{"op": "count", "as": "count"}],
-      "groupby": ["AUTHORITY"]
+      "groupby": ["Authority_Full"]
     },
     {
       "window": [{"op": "rank", "as": "rank"}],
@@ -25,16 +29,16 @@
   "encoding": {
     "theta": {"field": "count", "type": "quantitative"},
     "color": {
-      "field": "AUTHORITY", 
+      "field": "Authority_Full", 
       "type": "nominal", 
       "legend": {
         "orient": "right",
         "title": "Authority",
-        "labelLimit": 100
+        "labelLimit": 200
       }
     },
     "tooltip": [
-      {"field": "AUTHORITY", "type": "nominal", "title": "Authority"},
+      {"field": "Authority_Full", "type": "nominal", "title": "Authority"},
       {"field": "count", "type": "quantitative", "title": "Count"}
     ]
   }

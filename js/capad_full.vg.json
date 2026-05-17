@@ -36,6 +36,12 @@
           "feature": "Protected_Areas_(CAPAD)"
         }
       },
+      "transform": [
+        {
+          "calculate": "datum.properties.STATE == 'VIC' ? 'Victoria' : datum.properties.STATE == 'NSW' ? 'New South Wales' : datum.properties.STATE == 'QLD' ? 'Queensland' : datum.properties.STATE == 'SA' ? 'South Australia' : datum.properties.STATE == 'WA' ? 'Western Australia' : datum.properties.STATE == 'TAS' ? 'Tasmania' : datum.properties.STATE == 'NT' ? 'Northern Territory' : datum.properties.STATE == 'ACT' ? 'Australian Capital Territory' : datum.properties.STATE == 'COM' ? 'Commonwealth' : datum.properties.STATE == 'EXT' ? 'External Territory' : datum.properties.STATE",
+          "as": "State_Full"
+        }
+      ],
       "mark": {
         "type": "geoshape",
         "fill": "#2ca25f",
@@ -44,7 +50,8 @@
       },
       "encoding": {
         "tooltip": [
-          {"field": "properties.NAME", "type": "nominal", "title": "Terrestrial Reserve"},
+          {"field": "properties.NAME", "type": "nominal", "title": "Name"},
+          {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
           {"field": "properties.TYPE", "type": "nominal", "title": "Type"},
           {"field": "properties.IUCN", "type": "nominal", "title": "IUCN Level"}
         ]
@@ -58,6 +65,12 @@
           "feature": "Marine_Protected_Areas_(CAPAD)"
         }
       },
+      "transform": [
+        {
+          "calculate": "datum.properties.STATE == 'VIC' ? 'Victoria' : datum.properties.STATE == 'NSW' ? 'New South Wales' : datum.properties.STATE == 'QLD' ? 'Queensland' : datum.properties.STATE == 'SA' ? 'South Australia' : datum.properties.STATE == 'WA' ? 'Western Australia' : datum.properties.STATE == 'TAS' ? 'Tasmania' : datum.properties.STATE == 'NT' ? 'Northern Territory' : datum.properties.STATE == 'ACT' ? 'Australian Capital Territory' : datum.properties.STATE == 'COM' ? 'Commonwealth' : datum.properties.STATE == 'EXT' ? 'External Territory' : datum.properties.STATE",
+          "as": "State_Full"
+        }
+      ],
       "mark": {
         "type": "geoshape",
         "fill": "#2c7fb8",
@@ -66,7 +79,8 @@
       },
       "encoding": {
         "tooltip": [
-          {"field": "properties.NAME", "type": "nominal", "title": "Marine Sanctuary"},
+          {"field": "properties.NAME", "type": "nominal", "title": "Name"},
+          {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
           {"field": "properties.TYPE", "type": "nominal", "title": "Type"},
           {"field": "properties.IUCN", "type": "nominal", "title": "IUCN Level"}
         ]

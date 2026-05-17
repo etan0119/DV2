@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Gap Analysis: Protection Area vs. Latitude (Representative of Ecological Zones)",
+  "title": "Gap Analysis: Protection Area vs. Latitude",
   "width": "container",
   "height": 400,
   "data": {
@@ -10,6 +10,10 @@
   "transform": [
     {
       "filter": "datum.GIS_AREA > 0 && datum.LATITUDE != null"
+    },
+    {
+      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE == 'EXT' ? 'External Territory' : datum.STATE",
+      "as": "State_Full"
     }
   ],
   "mark": {"type": "point", "opacity": 0.5, "filled": true},
@@ -26,13 +30,13 @@
       "title": "Protected Area Size (ha, Log Scale)"
     },
     "color": {
-      "field": "STATE",
+      "field": "State_Full",
       "type": "nominal",
-      "title": "State"
+      "title": "State/Territory"
     },
     "tooltip": [
       {"field": "NAME", "type": "nominal", "title": "Name"},
-      {"field": "STATE", "type": "nominal", "title": "State"},
+      {"field": "State_Full", "type": "nominal", "title": "State"},
       {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
     ]
   }

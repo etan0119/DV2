@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Protected Area Count by State and Type",
+  "title": "Protected Area Count by State and Environment",
   "width": "container",
   "height": 300,
   "autosize": {"type": "fit", "contains": "padding"},
@@ -13,23 +13,27 @@
       "filter": "datum.STATE != 'EXT'"
     },
     {
-      "calculate": "datum.ENVIRON == 'T' ? 'Terrestrial' : 'Marine'",
+      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE",
+      "as": "State_Full"
+    },
+    {
+      "calculate": "datum.ENVIRON == 'T' ? 'Terrestrial' : datum.ENVIRON == 'M' ? 'Marine' : 'Both'",
       "as": "Environment"
     }
   ],
   "mark": "rect",
   "encoding": {
-    "x": {"field": "STATE", "type": "nominal", "title": "State"},
+    "x": {"field": "State_Full", "type": "nominal", "title": "State/Territory", "axis": {"labelAngle": -45}},
     "y": {"field": "Environment", "type": "nominal", "title": null},
     "color": {
       "aggregate": "count",
       "type": "quantitative",
       "scale": {"scheme": "oranges"},
-      "legend": {"title": "Count", "orient": "right"}
+      "legend": {"title": "Site Count", "orient": "right"}
     },
     "tooltip": [
-      {"field": "STATE", "type": "nominal"},
-      {"field": "ENVIRON", "type": "nominal"},
+      {"field": "State_Full", "type": "nominal", "title": "State"},
+      {"field": "Environment", "type": "nominal"},
       {"aggregate": "count", "type": "quantitative", "title": "Count"}
     ]
   }
