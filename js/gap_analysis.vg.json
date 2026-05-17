@@ -1,0 +1,39 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Gap Analysis: Protection Area vs. Latitude (Representative of Ecological Zones)",
+  "width": "container",
+  "height": 400,
+  "data": {
+    "url": "data/capad_metadata.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "filter": "datum.GIS_AREA > 0 && datum.LATITUDE != null"
+    }
+  ],
+  "mark": {"type": "point", "opacity": 0.5, "filled": true},
+  "encoding": {
+    "x": {
+      "field": "LATITUDE",
+      "type": "quantitative",
+      "title": "Latitude (Degrees South)"
+    },
+    "y": {
+      "field": "GIS_AREA",
+      "type": "quantitative",
+      "scale": {"type": "log"},
+      "title": "Protected Area Size (ha, Log Scale)"
+    },
+    "color": {
+      "field": "STATE",
+      "type": "nominal",
+      "title": "State"
+    },
+    "tooltip": [
+      {"field": "NAME", "type": "nominal", "title": "Name"},
+      {"field": "STATE", "type": "nominal", "title": "State"},
+      {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
+    ]
+  }
+}

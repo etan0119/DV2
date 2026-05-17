@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Australia's Biodiversity Dashboard</title>
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Vega Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+</head>
+<body>
+
+  <main class="dashboard">
+    <header>
+      <h1>Australia's Biodiversity Crisis</h1>
+      <p>The Race to Protect Our Unique Wildlife through the Collaborative Australian Protected Areas Database (CAPAD)</p>
+    </header>
+
+    <!-- Map Section -->
+    <section class="chart-section">
+      <div id="capad_full" class="chart-container chart-container-large map-container"></div>
+      <div class="text-block">
+        <h2>The Grand Sanctuary</h2>
+        <p>Australia is one of the world's most "megadiverse" nations. Our vast landscapes and surrounding oceans are home to species found nowhere else on Earth.</p>
+        <p>The <strong>CAPAD</strong> framework maps out the sanctuaries where nature is given a fighting chance. From the rugged Outback to the vibrant Great Barrier Reef, these are the lines we've drawn in the sand to protect life.</p>
+      </div>
+    </section>
+
+    <!-- Protected Area Growth Section -->
+    <section class="chart-section">
+      <div id="area_growth_chart" class="chart-container chart-container-large"></div>
+      <div class="text-block">
+        <h2>A Legacy of Growth</h2>
+        <p>Since the early 20th century, our commitment to conservation has scaled significantly. tracing the cumulative growth reveals the nation's evolving commitment to environmental stewardship.</p>
+        <p>Use the dropdown below the chart to explore how individual states have contributed to this expanding national network.</p>
+      </div>
+    </section>
+
+    <!-- Threatened Species / IUCN Section -->
+    <section class="chart-section">
+      <div id="threatened_species_chart" class="chart-container chart-container-large"></div>
+      <div class="text-block">
+        <h2>The Spectrum of Care</h2>
+        <p>Not all protected areas are managed the same way. The <strong>IUCN Management Categories</strong> define the strictness of our stewardship.</p>
+        <p>From strict nature reserves to managed resource areas, this breakdown underscores the varying strategies required to prevent the loss of our most iconic species.</p>
+      </div>
+    </section>
+
+    <!-- Gap Analysis Section -->
+    <section class="chart-section">
+      <div id="gap_analysis_chart" class="chart-container chart-container-large"></div>
+      <div class="text-block">
+        <h2>Identifying the Gaps</h2>
+        <p>By analyzing protected area size against latitude, we can identify "blind spots" in our ecological network. Are certain zones being left behind?</p>
+        <p>Large, connected corridors are essential for species migration and survival in the face of climate change.</p>
+      </div>
+    </section>
+
+    <!-- Grid Section for Smaller Charts -->
+    <div class="grid-section">
+      <div class="chart-card">
+        <h3>Conservation Authority Share</h3>
+        <div id="funding_donut_chart" class="chart-container"></div>
+        <p class="chart-description">Understand which national and state authorities manage our protected areas and coordinate resources.</p>
+      </div>
+      
+      <div class="chart-card">
+        <h3>Protection by State & Environment</h3>
+        <div id="threat_density_heatmap" class="chart-container"></div>
+        <p class="chart-description">Analyzing the distribution of protected areas across environment types (Marine vs Terrestrial) by state.</p>
+      </div>
+
+      <div class="chart-card full-width">
+        <h3>Composition of Protected Area Types</h3>
+        <div id="conservation_treemap" class="chart-container"></div>
+        <p class="chart-description">From National Parks to Nature Refuges, the variety of protection types reflects Australia's diverse conservation strategies.</p>
+      </div>
+    </div>
+
+    <footer class="dashboard-footer">
+      <div class="footer-col">
+        <h3>Data Credits</h3>
+        <p>Source: Collaborative Australian Protected Areas Database (CAPAD)</p>
+        <p>Created by: [Student Name]</p>
+        <p>Date: May 2026</p>
+      </div>
+      <div class="footer-col" style="text-align: right;">
+        <h3>Coursework</h3>
+        <p>FIT2179 Monash University</p>
+        <p><a href="#">View on GitHub</a></p>
+      </div>
+    </footer>
+  </main>
+
+  <script type="text/javascript">
+    // Geographic Map
+    vegaEmbed('#capad_full', "js/capad_full.vg.json").catch(console.error);
+
+    // Area Growth Chart
+    vegaEmbed('#area_growth_chart', "js/area_growth.vg.json").catch(console.error);
+    
+    // IUCN Distribution
+    vegaEmbed('#threatened_species_chart', "js/iucn_distribution.vg.json").catch(console.error);
+
+    // Gap Analysis
+    vegaEmbed('#gap_analysis_chart', "js/gap_analysis.vg.json").catch(console.error);
+
+    // Grid Section Charts
+    vegaEmbed('#funding_donut_chart', "js/funding_donut.vg.json").catch(console.error);
+    vegaEmbed('#threat_density_heatmap', "js/threat_density.vg.json").catch(console.error);
+    vegaEmbed('#conservation_treemap', "js/conservation_treemap.vg.json").catch(console.error);
+  </script>
+
+</body>
+</html>

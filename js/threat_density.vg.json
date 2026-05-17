@@ -1,0 +1,31 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Protected Area Count by State and Type",
+  "width": "container",
+  "height": 250,
+  "data": {
+    "url": "data/capad_metadata.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "filter": "datum.STATE != 'EXT'"
+    }
+  ],
+  "mark": "rect",
+  "encoding": {
+    "x": {"field": "STATE", "type": "nominal", "title": "State"},
+    "y": {"field": "ENVIRON", "type": "nominal", "title": "Environment (T=Terr, M=Marine)"},
+    "color": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "scale": {"scheme": "oranges"},
+      "title": "Count"
+    },
+    "tooltip": [
+      {"field": "STATE", "type": "nominal"},
+      {"field": "ENVIRON", "type": "nominal"},
+      {"aggregate": "count", "type": "quantitative", "title": "Count"}
+    ]
+  }
+}

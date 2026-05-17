@@ -1,0 +1,39 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Distribution of Protected Areas by IUCN Management Category",
+  "width": "container",
+  "height": 400,
+  "data": {
+    "url": "data/capad_metadata.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "filter": "datum.IUCN != null && datum.IUCN != '' && datum.IUCN != 'null'"
+    }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "x": {
+      "field": "IUCN",
+      "type": "nominal",
+      "title": "IUCN Category",
+      "sort": ["Ia", "Ib", "II", "III", "IV", "V", "VI"]
+    },
+    "y": {
+      "aggregate": "count",
+      "type": "quantitative",
+      "title": "Number of Protected Areas"
+    },
+    "color": {
+      "field": "IUCN",
+      "type": "nominal",
+      "scale": {"scheme": "viridis"},
+      "legend": null
+    },
+    "tooltip": [
+      {"field": "IUCN", "type": "nominal", "title": "IUCN Category"},
+      {"aggregate": "count", "type": "quantitative", "title": "Count"}
+    ]
+  }
+}

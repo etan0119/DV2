@@ -1,0 +1,85 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Cumulative Growth of Protected Areas in Australia",
+  "width": "container",
+  "height": 400,
+  "data": {
+    "url": "data/capad_metadata.csv",
+    "format": {"type": "csv"}
+  },
+  "params": [
+    {
+      "name": "State_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "NSW",
+          "VIC",
+          "QLD",
+          "SA",
+          "WA",
+          "TAS",
+          "NT",
+          "ACT",
+          "COM"
+        ],
+        "labels": [
+          "Show All",
+          "New South Wales",
+          "Victoria",
+          "Queensland",
+          "South Australia",
+          "Western Australia",
+          "Tasmania",
+          "Northern Territory",
+          "Australian Capital Territory",
+          "Commonwealth"
+        ],
+        "name": "Select State: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.GAZ_DATE != null && datum.GAZ_AREA > 0"
+    },
+    {
+      "calculate": "year(datum.GAZ_DATE)",
+      "as": "Year"
+    },
+    {
+      "filter": "State_selection == null || datum.STATE == State_selection"
+    },
+    {
+      "aggregate": [{"op": "sum", "field": "GAZ_AREA", "as": "Total_Area"}],
+      "groupby": ["Year"]
+    },
+    {
+      "sort": [{"field": "Year"}],
+      "window": [{"op": "sum", "field": "Total_Area", "as": "Cumulative_Area"}]
+    }
+  ],
+  "mark": {
+    "type": "area",
+    "color": "#2c7fb8",
+    "line": true,
+    "point": true
+  },
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "temporal",
+      "title": "Year of Establishment"
+    },
+    "y": {
+      "field": "Cumulative_Area",
+      "type": "quantitative",
+      "title": "Total Protected Area (Hectares)"
+    },
+    "tooltip": [
+      {"field": "Year", "type": "temporal", "title": "Year"},
+      {"field": "Cumulative_Area", "type": "quantitative", "title": "Cumulative Area (ha)", "format": ","}
+    ]
+  }
+}

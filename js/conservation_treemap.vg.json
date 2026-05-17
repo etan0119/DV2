@@ -1,0 +1,47 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Top 15 Protected Area Types by Frequency",
+  "width": "container",
+  "height": 400,
+  "data": {
+    "url": "data/capad_metadata.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "aggregate": [{"op": "count", "as": "count"}],
+      "groupby": ["TYPE"]
+    },
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "count", "order": "descending"}]
+    },
+    {
+      "filter": "datum.rank <= 15"
+    }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "y": {
+      "field": "TYPE",
+      "type": "nominal",
+      "title": "Protection Type",
+      "sort": "-x"
+    },
+    "x": {
+      "field": "count",
+      "type": "quantitative",
+      "title": "Number of Protected Areas"
+    },
+    "color": {
+      "field": "count",
+      "type": "quantitative",
+      "scale": {"scheme": "greens"},
+      "legend": null
+    },
+    "tooltip": [
+      {"field": "TYPE", "type": "nominal", "title": "Type"},
+      {"field": "count", "type": "quantitative", "title": "Count"}
+    ]
+  }
+}
