@@ -74,15 +74,15 @@
           <div id="gap_analysis_chart" class="chart-container" style="height: 100%;"></div>
         </div>
         <div class="scrolly-narrative">
-          <div class="scrolly-step">
+          <div class="scrolly-step" data-step="1">
             <h2>Distorting the Distance</h2>
             <p>The divide between land and sea reveals a striking geographical imbalance. While the mainland shows a clear trend of massive reserves in the north giving way to smaller, fragmented pockets in the south, this "latitudinal bias" is more complex than it first appears.</p>
           </div>
-          <div class="scrolly-step">
+          <div class="scrolly-step" data-step="2">
             <h3>The Remote Distortion</h3>
             <p>The inclusion of <strong>External Territories</strong> and massive offshore <strong>Commonwealth Marine Parks</strong> creates a visual distortion. These remote sanctuaries, such as the Coral Sea and sub-Antarctic Macquarie Island, operate at a scale that dwarfs typical mainland efforts.</p>
           </div>
-          <div class="scrolly-step">
+          <div class="scrolly-step" data-step="3">
             <h3>The Mainland Crisis</h3>
             <p>By separating these environments, we can pinpoint the true mainland crisis: our most biodiverse temperate regions in the south are relying on a fragile network of tiny "postage-stamp" sanctuaries. Only the vast arid north provides the landscape-scale protection necessary for species to survive climate shifts.</p>
           </div>
@@ -129,6 +129,9 @@
   </main>
 
   <script type="text/javascript">
+    // Store Vega View for Gap Analysis to update signals
+    var gapView;
+
     // Geographic Map
     vegaEmbed('#capad_full', "js/capad_full.vg.json").catch(console.error);
 
@@ -141,13 +144,39 @@
     // IUCN Distribution
     vegaEmbed('#threatened_species_chart', "js/iucn_distribution.vg.json").catch(console.error);
 
-    // Gap Analysis
-    vegaEmbed('#gap_analysis_chart', "js/gap_analysis.vg.json").catch(console.error);
+    // Gap Analysis (Scrollytelling)
+    vegaEmbed('#gap_analysis_chart', "js/gap_analysis.vg.json").then(function(result) {
+      gapView = result.view;
+      setupScrollytelling();
+    }).catch(console.error);
 
     // Grid Section Charts
     vegaEmbed('#funding_donut_chart', "js/funding_donut.vg.json").catch(console.error);
     vegaEmbed('#threat_density_heatmap', "js/threat_density.vg.json").catch(console.error);
     vegaEmbed('#conservation_treemap', "js/conservation_treemap.vg.json").catch(console.error);
+
+    function setupScrollytelling() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const step = parseInt(entry.target.getAttribute('data-step'));
+            if (gapView) {
+              gapView.signal('active_step', step).run();
+            }
+            // visual feedback in HTML
+            entry.target.style.opacity = "1";
+          } else {
+            entry.target.style.opacity = "0.3";
+          }
+        });
+      }, {
+        threshold: 0.6
+      });
+
+      document.querySelectorAll('.scrolly-step').forEach(step => {
+        observer.observe(step);
+      });
+    }
   </script>
 
 </body>

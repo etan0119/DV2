@@ -10,6 +10,12 @@
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
   },
+  "params": [
+    {
+      "name": "active_step",
+      "value": 1
+    }
+  ],
   "transform": [
     {
       "filter": "datum.GIS_AREA > 0 && datum.LATITUDE != null"
@@ -61,20 +67,29 @@
               "legend": {"orient": "right", "title": "State/Territory", "titleLimit": 200}
             },
             "opacity": {
-              "condition": {"param": "State_Selection", "value": 0.3},
+              "condition": [
+                {
+                  "test": "active_step == 2 && (datum.STATE == 'COM' || datum.STATE == 'EXT')",
+                  "value": 0.8
+                },
+                {
+                  "test": "active_step == 3 && (datum.STATE != 'COM' && datum.STATE != 'EXT')",
+                  "value": 0.8
+                },
+                {
+                  "test": "active_step == 1",
+                  "condition": {"param": "State_Selection", "value": 0.3},
+                  "value": 0.05
+                }
+              ],
               "value": 0.05
             },
-            "size": {"value": 15},
-            "tooltip": [
-              {"field": "NAME", "type": "nominal", "title": "Name"},
-              {"field": "State_Full", "type": "nominal", "title": "State"},
-              {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
-            ]
+            "size": {"value": 15}
           }
         },
         {
           "transform": [
-            {"filter": {"param": "State_Selection"}},
+            {"filter": "active_step == 1 || (active_step == 2 && (datum.STATE == 'COM' || datum.STATE == 'EXT')) || (active_step == 3 && (datum.STATE != 'COM' && datum.STATE != 'EXT'))"},
             {
               "aggregate": [{"op": "mean", "field": "GIS_AREA", "as": "Mean_Area"}],
               "groupby": ["Lat_Bin"]
@@ -119,20 +134,29 @@
               "legend": null
             },
             "opacity": {
-              "condition": {"param": "State_Selection", "value": 0.3},
+              "condition": [
+                {
+                  "test": "active_step == 2 && (datum.STATE == 'COM' || datum.STATE == 'EXT')",
+                  "value": 0.8
+                },
+                {
+                  "test": "active_step == 3 && (datum.STATE != 'COM' && datum.STATE != 'EXT')",
+                  "value": 0.8
+                },
+                {
+                  "test": "active_step == 1",
+                  "condition": {"param": "State_Selection", "value": 0.3},
+                  "value": 0.05
+                }
+              ],
               "value": 0.05
             },
-            "size": {"value": 15},
-            "tooltip": [
-              {"field": "NAME", "type": "nominal", "title": "Name"},
-              {"field": "State_Full", "type": "nominal", "title": "State"},
-              {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
-            ]
+            "size": {"value": 15}
           }
         },
         {
           "transform": [
-            {"filter": {"param": "State_Selection"}},
+            {"filter": "active_step == 1 || (active_step == 2 && (datum.STATE == 'COM' || datum.STATE == 'EXT')) || (active_step == 3 && (datum.STATE != 'COM' && datum.STATE != 'EXT'))"},
             {
               "aggregate": [{"op": "mean", "field": "GIS_AREA", "as": "Mean_Area"}],
               "groupby": ["Lat_Bin"]
