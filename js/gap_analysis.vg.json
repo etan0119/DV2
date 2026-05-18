@@ -84,7 +84,12 @@
               ],
               "value": 0.05
             },
-            "size": {"value": 15}
+            "size": {"value": 15},
+            "tooltip": [
+              {"field": "NAME", "type": "nominal", "title": "Sanctuary Name"},
+              {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
+              {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
+            ]
           }
         },
         {
@@ -99,11 +104,16 @@
             "type": "line",
             "strokeWidth": 3,
             "opacity": 0.8,
-            "color": "#d95f02"
+            "color": "#d95f02",
+            "tooltip": true
           },
           "encoding": {
-            "x": {"field": "Lat_Bin", "type": "quantitative"},
-            "y": {"field": "Mean_Area", "type": "quantitative"}
+            "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
+            "y": {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)"},
+            "tooltip": [
+              {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
+              {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)", "format": ","}
+            ]
           }
         }
       ]
@@ -151,7 +161,12 @@
               ],
               "value": 0.05
             },
-            "size": {"value": 15}
+            "size": {"value": 15},
+            "tooltip": [
+              {"field": "NAME", "type": "nominal", "title": "Sanctuary Name"},
+              {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
+              {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
+            ]
           }
         },
         {
@@ -166,11 +181,16 @@
             "type": "line",
             "strokeWidth": 3,
             "opacity": 0.8,
-            "color": "#d95f02"
+            "color": "#d95f02",
+            "tooltip": true
           },
           "encoding": {
-            "x": {"field": "Lat_Bin", "type": "quantitative"},
-            "y": {"field": "Mean_Area", "type": "quantitative"}
+            "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
+            "y": {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)"},
+            "tooltip": [
+              {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
+              {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)", "format": ","}
+            ]
           }
         }
       ]
