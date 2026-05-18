@@ -82,7 +82,7 @@
                   "value": 0.25
                 }
               ],
-              "value": 0.05
+              "value": 0.15
             },
             "size": {"value": 15},
             "tooltip": [
@@ -159,7 +159,7 @@
                   "value": 0.25
                 }
               ],
-              "value": 0.05
+              "value": 0.15
             },
             "size": {"value": 15},
             "tooltip": [
