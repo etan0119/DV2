@@ -11,20 +11,39 @@
     "url": "data/tsx_index.csv",
     "format": {"type": "csv"}
   },
-  "mark": {"type": "line", "point": true},
-  "encoding": {
-    "x": {"field": "Year", "type": "temporal", "title": "Year"},
-    "y": {"field": "Relative_Abundance", "type": "quantitative", "title": "Relative Abundance Index"},
-    "color": {
-      "field": "Group",
-      "type": "nominal",
-      "scale": {"scheme": "category10"},
-      "title": "Taxonomic Group"
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [4, 4],
+        "color": "red",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "y": {"datum": 1.0}
+      }
     },
-    "tooltip": [
-      {"field": "Year", "type": "temporal"},
-      {"field": "Group", "type": "nominal"},
-      {"field": "Relative_Abundance", "type": "quantitative", "format": ".2f"}
-    ]
-  }
+    {
+      "mark": {"type": "line", "point": true},
+      "encoding": {
+        "x": {"field": "Year", "type": "temporal", "title": "Year"},
+        "y": {
+          "field": "Relative_Abundance",
+          "type": "quantitative", 
+          "title": "Relative Abundance Index"
+        },
+        "color": {
+          "field": "Group",
+          "type": "nominal",
+          "scale": {"scheme": "category10"},
+          "title": "Taxonomic Group"
+        },
+        "tooltip": [
+          {"field": "Year", "type": "temporal"},
+          {"field": "Group", "type": "nominal"},
+          {"field": "Relative_Abundance", "type": "quantitative", "format": ".2f"}
+        ]
+      }
+    }
+  ]
 }
