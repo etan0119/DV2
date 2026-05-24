@@ -13,6 +13,20 @@
     "center": [133.7751, -25.2744],
     "scale": 700
   },
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    "legend": {
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "labelFont": "Open Sans",
+      "labelFontSize": 11
+    }
+  },
   "layer": [
     {
       "data": {
@@ -44,9 +58,32 @@
       ],
       "mark": {
         "type": "geoshape",
-        "fill": "#2ca25f",
         "stroke": "white",
         "strokeWidth": 0.2
+      },
+      "encoding": {
+        "color": {
+          "datum": "Terrestrial Reserve",
+          "scale": {
+            "domain": ["Terrestrial Reserve", "Marine Sanctuary"],
+            "range": ["#2ca25f", "#2c7fb8"]
+          },
+          "legend": {
+            "title": "Zone Type",
+            "orient": "bottom-left",
+            "offset": 20,
+            "padding": 10,
+            "background": "white",
+            "cornerRadius": 5,
+            "strokeColor": "gray"
+          }
+        },
+        "tooltip": [
+          {"field": "properties.NAME", "type": "nominal", "title": "Name"},
+          {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
+          {"field": "properties.TYPE", "type": "nominal", "title": "Type"},
+          {"field": "properties.IUCN", "type": "nominal", "title": "IUCN Level"}
+        ]
       }
     },
     {
@@ -65,11 +102,13 @@
       ],
       "mark": {
         "type": "geoshape",
-        "fill": "#2c7fb8",
         "stroke": "white",
         "strokeWidth": 0.2
       },
       "encoding": {
+        "color": {
+          "datum": "Marine Sanctuary"
+        },
         "tooltip": [
           {"field": "properties.NAME", "type": "nominal", "title": "Name"},
           {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
