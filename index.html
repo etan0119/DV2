@@ -70,11 +70,21 @@
       </div>
     </section>
 
+    <!-- 30x30 Benchmark Section -->
+    <section class="chart-section">
+      <div id="benchmark_30x30_chart" class="chart-container chart-container-large"></div>
+      <div class="text-block">
+        <h2>The 30x30 Race: Is Your State Winning?</h2>
+        <p>Under the <strong>Kunming-Montreal Global Biodiversity Framework</strong>, Australia has committed to protecting 30% of its land and 30% of its seas by 2030. This "30x30" goal is the global gold standard for halting extinction.</p>
+        <p>However, the race is uneven. While the <span style="color: #2ca25f; font-weight: bold;">Green Bars</span> show regions like Tasmania and the ACT have already surged past the finish line, most states remain in the <span style="color: #d95f02; font-weight: bold;">Orange Zone</span>. This chart highlights that the national average is buoyed by a few high-performers, masking the critical need for more reserves in our most populous states.</p>
+      </div>
+    </section>
+
     <!-- Gap Analysis Section (Scrollytelling) -->
     <section class="scrolly-section">
       <div class="scrolly-container">
         <div class="scrolly-visual">
-          <div id="gap_analysis_chart" class="chart-container" style="height: 100%;"></div>
+          <div id="gap_analysis_chart" class="chart-container" style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%;"></div>
         </div>
         <div class="scrolly-narrative">
           <div class="scrolly-step" data-step="1">
@@ -120,18 +130,24 @@
     </section>
 
     <footer class="dashboard-footer">
-      <div class="footer-col">
-        <h3>Data Credits</h3>
-        <p>Source: Collaborative Australian Protected Areas Database (CAPAD) & Threatened Species Index (TSX)</p>
-        <p>Created by: Eric Tan Chen Hee</p>
-        <p>Date: May 2026</p>
+      <div class="footer-col" style="flex: 1; min-width: 300px;">
+        <h3>References & Data Sources</h3>
+        <p style="font-size: 0.85rem; line-height: 1.4; margin-bottom: 10px;">
+          Department of Climate Change, Energy, the Environment and Water. (2024). <em>Collaborative Australian Protected Areas Database (CAPAD) 2024</em> [Data set]. Australian Government. https://www.dcceew.gov.au/environment/land/nrs/science/capad
+        </p>
+        <p style="font-size: 0.85rem; line-height: 1.4;">
+          Threatened Species Index. (2023). <em>Threatened Species Index (TSX)</em> [Data set]. Terrestrial Ecosystem Research Network (TERN). https://tsx.org.au/
+        </p>
       </div>
       <div class="footer-col" style="text-align: right;">
-        <h3>Coursework</h3>
-        <p>FIT2179 Monash University</p>
+        <h3>Credits</h3>
+        <p>Created by: Eric Tan Chen Hee</p>
+        <p>Date: May 2026</p>
+        <p>Coursework: FIT2179 Monash University</p>
         <p><a href="https://github.com/etan0119/DV2">View on GitHub</a></p>
       </div>
     </footer>
+
   </main>
 
   <script type="text/javascript">
@@ -146,6 +162,9 @@
 
     // Area Growth Chart
     vegaEmbed('#area_growth_chart', "js/area_growth.vg.json").catch(console.error);
+    
+    // 30x30 Benchmark
+    vegaEmbed('#benchmark_30x30_chart', "js/benchmarking_30x30.vg.json").catch(console.error);
     
     // IUCN Distribution
     vegaEmbed('#threatened_species_chart', "js/iucn_distribution.vg.json").catch(console.error);

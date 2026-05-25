@@ -1,0 +1,118 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The 30x30 Race: State Progress",
+    "subtitle": "Percentage of Terrestrial Land Protected vs. 2030 International Goal (30%)",
+    "anchor": "start"
+  },
+  "width": "container",
+  "height": 350,
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    "axis": {
+      "labelFont": "Open Sans",
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "titleFontWeight": "bold"
+    }
+  },
+  "data": {
+    "url": "data/capad_metadata.csv",
+    "format": {
+      "type": "csv",
+      "parse": {"GIS_AREA": "number"}
+    }
+  },
+  "transform": [
+    {
+      "filter": "datum.ENVIRON == 'T' && datum.GIS_AREA > 0"
+    },
+    {
+      "calculate": "datum.STATE == 'VIC' ? 22741600 : datum.STATE == 'NSW' ? 80064200 : datum.STATE == 'QLD' ? 173064800 : datum.STATE == 'SA' ? 98348200 : datum.STATE == 'WA' ? 252987500 : datum.STATE == 'TAS' ? 6840100 : datum.STATE == 'NT' ? 134912900 : datum.STATE == 'ACT' ? 235800 : 0",
+      "as": "Total_State_Area"
+    },
+    {
+      "aggregate": [
+        {"op": "sum", "field": "GIS_AREA", "as": "Protected_Area"},
+        {"op": "max", "field": "Total_State_Area", "as": "State_Limit"}
+      ],
+      "groupby": ["STATE"]
+    },
+    {
+      "filter": "datum.State_Limit > 0"
+    },
+    {
+      "calculate": "datum.Protected_Area / datum.State_Limit * 100",
+      "as": "Percent_Protected"
+    },
+    {
+      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE",
+      "as": "State_Full"
+    },
+    {
+      "filter": "datum.STATE != 'COM' && datum.STATE != 'EXT'"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {"type": "bar", "cornerRadiusEnd": 4},
+      "encoding": {
+        "y": {
+          "field": "State_Full",
+          "type": "nominal",
+          "title": null,
+          "sort": {"field": "Percent_Protected", "order": "descending"}
+        },
+        "x": {
+          "field": "Percent_Protected",
+          "type": "quantitative",
+          "title": "Percentage Protected (%)",
+          "scale": {"domain": [0, 60]}
+        },
+        "color": {
+          "condition": {
+            "test": "datum.Percent_Protected >= 30",
+            "value": "#2ca25f"
+          },
+          "value": "#d95f02"
+        },
+        "tooltip": [
+          {"field": "State_Full", "type": "nominal", "title": "State"},
+          {"field": "Percent_Protected", "type": "quantitative", "title": "% Protected", "format": ".1f"},
+          {"field": "Protected_Area", "type": "quantitative", "title": "Protected Area (ha)", "format": ","}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#333",
+        "strokeWidth": 2,
+        "strokeDash": [4, 4]
+      },
+      "encoding": {
+        "x": {"datum": 30}
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "bottom",
+        "dx": -5,
+        "dy": -140,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "text": "30% Global Target"
+      },
+      "encoding": {
+        "x": {"datum": 30}
+      }
+    }
+  ]
+}
