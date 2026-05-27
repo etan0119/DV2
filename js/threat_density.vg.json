@@ -1,9 +1,32 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Protected Area Count by State and Environment",
+  "title": {
+    "text": "Protected Area Count by State and Environment",
+    "anchor": "start"
+  },
   "width": "container",
   "height": 300,
   "autosize": {"type": "fit", "contains": "padding"},
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    "axis": {
+      "labelFont": "Open Sans",
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "labelFont": "Open Sans",
+      "labelFontSize": 11
+    }
+  },
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
@@ -13,7 +36,7 @@
       "filter": "datum.STATE != 'EXT'"
     },
     {
-      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE",
+      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE == 'JBT' ? 'Jervis Bay Territory' : datum.STATE",
       "as": "State_Full"
     },
     {
@@ -34,7 +57,7 @@
     "tooltip": [
       {"field": "State_Full", "type": "nominal", "title": "State"},
       {"field": "Environment", "type": "nominal"},
-      {"aggregate": "count", "type": "quantitative", "title": "Count"}
+      {"aggregate": "count", "type": "quantitative", "title": "Count", "format": ","}
     ]
   }
 }

@@ -6,6 +6,27 @@
     "anchor": "start",
     "offset": 20
   },
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    "axis": {
+      "labelFont": "Open Sans",
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "labelFont": "Open Sans",
+      "labelFontSize": 11
+    },
+    "view": {"stroke": null}
+  },
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
@@ -21,7 +42,7 @@
       "filter": "datum.GIS_AREA > 0 && datum.LATITUDE != null"
     },
     {
-      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE == 'EXT' ? 'External Territory' : datum.STATE",
+      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE == 'EXT' ? 'External Territory' : datum.STATE == 'JBT' ? 'Jervis Bay Territory' : datum.STATE",
       "as": "State_Full"
     },
     {
@@ -108,7 +129,7 @@
             "tooltip": true
           },
           "encoding": {
-            "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
+            "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude (Degrees South)"},
             "y": {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)"},
             "tooltip": [
               {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
@@ -185,7 +206,7 @@
             "tooltip": true
           },
           "encoding": {
-            "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
+            "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude (Degrees South)"},
             "y": {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)"},
             "tooltip": [
               {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
@@ -195,8 +216,5 @@
         }
       ]
     }
-  ],
-  "config": {
-    "view": {"stroke": null}
-  }
+  ]
 }

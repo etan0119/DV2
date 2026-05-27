@@ -6,6 +6,27 @@
     "anchor": "start",
     "offset": 20
   },
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    "axis": {
+      "labelFont": "Open Sans",
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "labelFont": "Open Sans",
+      "labelFontSize": 11
+    },
+    "view": {"stroke": null}
+  },
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
@@ -36,7 +57,8 @@
         "y": {
           "aggregate": "count",
           "type": "quantitative",
-          "title": "Number of Sites"
+          "title": "Number of Sites",
+          "axis": {"format": ",d"}
         },
         "color": {
           "field": "IUCN_Description",
@@ -64,7 +86,7 @@
         },
         "tooltip": [
           {"field": "IUCN_Description", "type": "nominal", "title": "Category"},
-          {"aggregate": "count", "type": "quantitative", "title": "Total Sites"}
+          {"aggregate": "count", "type": "quantitative", "title": "Total Sites", "format": ",d"}
         ]
       }
     },
@@ -85,7 +107,8 @@
           "field": "GIS_AREA",
           "aggregate": "sum",
           "type": "quantitative",
-          "title": "Total Area (ha)"
+          "title": "Total Area (ha)",
+          "axis": {"format": ".2s"}
         },
         "color": {
           "field": "IUCN_Description",
@@ -110,8 +133,5 @@
         ]
       }
     }
-  ],
-  "config": {
-    "view": {"stroke": null}
-  }
+  ]
 }

@@ -1,9 +1,27 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Conservation Authority Share",
+  "title": {
+    "text": "Who Watches Over the Wild?",
+    "subtitle": "Top 10 Conservation Authorities by Sites Managed",
+    "anchor": "start"
+  },
   "width": "container",
   "height": 300,
   "autosize": {"type": "fit", "contains": "padding"},
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 14,
+      "fontWeight": "bold"
+    },
+    "axis": {
+      "labelFont": "Open Sans",
+      "titleFont": "Montserrat",
+      "titleFontSize": 11,
+      "titleFontWeight": "bold"
+    }
+  },
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
@@ -25,21 +43,68 @@
       "filter": "datum.rank <= 10"
     }
   ],
-  "mark": {"type": "arc", "innerRadius": 60},
-  "encoding": {
-    "theta": {"field": "count", "type": "quantitative"},
-    "color": {
-      "field": "Authority_Full", 
-      "type": "nominal", 
-      "legend": {
-        "orient": "right",
-        "title": "Authority",
-        "labelLimit": 200
+  "layer": [
+    {
+      "mark": {"type": "bar", "size": 2, "color": "#d0d0d0"},
+      "encoding": {
+        "y": {
+          "field": "Authority_Full",
+          "type": "nominal",
+          "title": null,
+          "sort": {"field": "count", "order": "descending"}
+        },
+        "x": {
+          "field": "count",
+          "type": "quantitative",
+          "title": "Number of Protected Sites Managed",
+          "scale": {"domainMax": 7000}
+        }
       }
     },
-    "tooltip": [
-      {"field": "Authority_Full", "type": "nominal", "title": "Authority"},
-      {"field": "count", "type": "quantitative", "title": "Count"}
-    ]
-  }
+    {
+      "mark": {"type": "circle", "size": 100, "opacity": 1, "color": "#1a4301"},
+      "encoding": {
+        "y": {
+          "field": "Authority_Full",
+          "type": "nominal",
+          "sort": {"field": "count", "order": "descending"}
+        },
+        "x": {
+          "field": "count",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {"field": "Authority_Full", "type": "nominal", "title": "Authority"},
+          {"field": "count", "type": "quantitative", "title": "Sites Managed", "format": ","}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 10,
+        "dy": 0,
+        "fontWeight": "bold",
+        "fontSize": 10,
+        "color": "#2c3e50"
+      },
+      "encoding": {
+        "y": {
+          "field": "Authority_Full",
+          "type": "nominal",
+          "sort": {"field": "count", "order": "descending"}
+        },
+        "x": {
+          "field": "count",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "count",
+          "type": "quantitative",
+          "format": ","
+        }
+      }
+    }
+  ]
 }

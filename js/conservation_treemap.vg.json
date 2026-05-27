@@ -1,47 +1,100 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Top 15 Protected Area Types by Frequency",
+  "title": {
+    "text": "Regional Patchwork: Naming Diversity by State",
+    "subtitle": "Percentage composition of protected area types across Australia's states",
+    "anchor": "start"
+  },
   "width": "container",
-  "height": 500,
+  "height": 450,
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 14,
+      "fontWeight": "bold"
+    },
+    "axis": {
+      "labelFont": "Open Sans",
+      "titleFont": "Montserrat",
+      "titleFontSize": 11,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "titleFont": "Montserrat",
+      "titleFontSize": 11,
+      "labelFont": "Open Sans",
+      "labelFontSize": 10
+    }
+  },
   "data": {
     "url": "data/capad_metadata.csv",
     "format": {"type": "csv"}
   },
   "transform": [
     {
-      "aggregate": [{"op": "count", "as": "count"}],
-      "groupby": ["TYPE"]
+      "filter": "datum.STATE != 'EXT' && datum.TYPE != null"
     },
     {
-      "window": [{"op": "rank", "as": "rank"}],
-      "sort": [{"field": "count", "order": "descending"}]
+      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE == 'JBT' ? 'Jervis Bay Territory' : datum.STATE",
+      "as": "State_Full"
     },
     {
-      "filter": "datum.rank <= 15"
+      "calculate": "datum.TYPE == 'Nature Reserve' ? 'Nature Reserve' : datum.TYPE == 'Heritage Agreement' ? 'Heritage Agreement' : datum.TYPE == 'National Park' ? 'National Park' : datum.TYPE == 'Natural Features Reserve' ? 'Natural Features Reserve' : datum.TYPE == 'Conservation Park' ? 'Conservation Park' : datum.TYPE == 'Nature Conservation Reserve' ? 'Nature Conservation Reserve' : datum.TYPE == 'Indigenous Protected Area' ? 'Indigenous Protected Area' : datum.TYPE == 'Private Nature Reserve' ? 'Private Nature Reserve' : 'Other Naming Types'",
+      "as": "Type_Group"
     }
   ],
   "mark": "bar",
   "encoding": {
-    "y": {
-      "field": "TYPE",
-      "type": "nominal",
-      "title": "Protection Type",
-      "sort": "-x"
-    },
     "x": {
-      "field": "count",
+      "field": "State_Full",
+      "type": "nominal",
+      "title": "State/Territory",
+      "axis": {"labelAngle": -45}
+    },
+    "y": {
+      "aggregate": "count",
       "type": "quantitative",
-      "title": "Number of Protected Areas"
+      "title": "Proportion of Protected Areas (%)",
+      "stack": "normalize"
     },
     "color": {
-      "field": "count",
-      "type": "quantitative",
-      "scale": {"scheme": "greens"},
-      "legend": null
+      "field": "Type_Group",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Nature Reserve",
+          "Heritage Agreement",
+          "National Park",
+          "Natural Features Reserve",
+          "Conservation Park",
+          "Nature Conservation Reserve",
+          "Indigenous Protected Area",
+          "Private Nature Reserve",
+          "Other Naming Types"
+        ],
+        "range": [
+          "#1b5e20",
+          "#e65100",
+          "#0288d1",
+          "#6a1b9a",
+          "#fbc02d",
+          "#00897b",
+          "#d32f2f",
+          "#5d4037",
+          "#78909c"
+        ]
+      },
+      "legend": {
+        "title": "Naming Category",
+        "orient": "right",
+        "labelLimit": 200
+      }
     },
     "tooltip": [
-      {"field": "TYPE", "type": "nominal", "title": "Type"},
-      {"field": "count", "type": "quantitative", "title": "Count"}
+      {"field": "State_Full", "type": "nominal", "title": "State"},
+      {"field": "Type_Group", "type": "nominal", "title": "Category"},
+      {"aggregate": "count", "type": "quantitative", "title": "Count", "format": ","}
     ]
   }
 }

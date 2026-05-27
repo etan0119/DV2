@@ -52,7 +52,7 @@
       },
       "transform": [
         {
-          "calculate": "datum.properties.STATE == 'VIC' ? 'Victoria' : datum.properties.STATE == 'NSW' ? 'New South Wales' : datum.properties.STATE == 'QLD' ? 'Queensland' : datum.properties.STATE == 'SA' ? 'South Australia' : datum.properties.STATE == 'WA' ? 'Western Australia' : datum.properties.STATE == 'TAS' ? 'Tasmania' : datum.properties.STATE == 'NT' ? 'Northern Territory' : datum.properties.STATE == 'ACT' ? 'Australian Capital Territory' : datum.properties.STATE == 'COM' ? 'Commonwealth' : datum.properties.STATE == 'EXT' ? 'External Territory' : datum.properties.STATE",
+          "calculate": "datum.properties.STATE == 'VIC' ? 'Victoria' : datum.properties.STATE == 'NSW' ? 'New South Wales' : datum.properties.STATE == 'QLD' ? 'Queensland' : datum.properties.STATE == 'SA' ? 'South Australia' : datum.properties.STATE == 'WA' ? 'Western Australia' : datum.properties.STATE == 'TAS' ? 'Tasmania' : datum.properties.STATE == 'NT' ? 'Northern Territory' : datum.properties.STATE == 'ACT' ? 'Australian Capital Territory' : datum.properties.STATE == 'COM' ? 'Commonwealth' : datum.properties.STATE == 'EXT' ? 'External Territory' : datum.properties.STATE == 'JBT' ? 'Jervis Bay Territory' : datum.properties.STATE",
           "as": "State_Full"
         }
       ],
@@ -96,7 +96,7 @@
       },
       "transform": [
         {
-          "calculate": "datum.properties.STATE == 'VIC' ? 'Victoria' : datum.properties.STATE == 'NSW' ? 'New South Wales' : datum.properties.STATE == 'QLD' ? 'Queensland' : datum.properties.STATE == 'SA' ? 'South Australia' : datum.properties.STATE == 'WA' ? 'Western Australia' : datum.properties.STATE == 'TAS' ? 'Tasmania' : datum.properties.STATE == 'NT' ? 'Northern Territory' : datum.properties.STATE == 'ACT' ? 'Australian Capital Territory' : datum.properties.STATE == 'COM' ? 'Commonwealth' : datum.properties.STATE == 'EXT' ? 'External Territory' : datum.properties.STATE",
+          "calculate": "datum.properties.STATE == 'VIC' ? 'Victoria' : datum.properties.STATE == 'NSW' ? 'New South Wales' : datum.properties.STATE == 'QLD' ? 'Queensland' : datum.properties.STATE == 'SA' ? 'South Australia' : datum.properties.STATE == 'WA' ? 'Western Australia' : datum.properties.STATE == 'TAS' ? 'Tasmania' : datum.properties.STATE == 'NT' ? 'Northern Territory' : datum.properties.STATE == 'ACT' ? 'Australian Capital Territory' : datum.properties.STATE == 'COM' ? 'Commonwealth' : datum.properties.STATE == 'EXT' ? 'External Territory' : datum.properties.STATE == 'JBT' ? 'Jervis Bay Territory' : datum.properties.STATE",
           "as": "State_Full"
         }
       ],

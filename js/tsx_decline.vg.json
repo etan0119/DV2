@@ -7,6 +7,26 @@
   },
   "width": "container",
   "height": 400,
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    "axis": {
+      "labelFont": "Open Sans",
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "labelFont": "Open Sans",
+      "labelFontSize": 11
+    }
+  },
   "data": {
     "url": "data/tsx_index.csv",
     "format": {"type": "csv"}
@@ -24,9 +44,31 @@
       }
     },
     {
+      "data": {"values": [{"Year": 2022, "Relative_Abundance": 1.0, "Text": "1985 Baseline"}]},
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -10,
+        "dy": -8,
+        "color": "red",
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "x": {"field": "Year", "type": "quantitative"},
+        "y": {"field": "Relative_Abundance", "type": "quantitative"},
+        "text": {"field": "Text"}
+      }
+    },
+    {
       "mark": {"type": "line", "point": true},
       "encoding": {
-        "x": {"field": "Year", "type": "temporal", "title": "Year"},
+        "x": {
+          "field": "Year",
+          "type": "quantitative",
+          "title": "Year",
+          "axis": {"format": "d"},
+          "scale": {"zero": false}
+        },
         "y": {
           "field": "Relative_Abundance",
           "type": "quantitative", 
@@ -35,13 +77,16 @@
         "color": {
           "field": "Group",
           "type": "nominal",
-          "scale": {"scheme": "category10"},
+          "scale": {
+            "domain": ["Birds", "Amphibians", "Mammals", "Plants", "Reptiles"],
+            "range": ["#2b8cbe", "#8856a7", "#e34a33", "#2ca25f", "#feb24c"]
+          },
           "title": "Taxonomic Group"
         },
         "tooltip": [
-          {"field": "Year", "type": "temporal"},
-          {"field": "Group", "type": "nominal"},
-          {"field": "Relative_Abundance", "type": "quantitative", "format": ".2f"}
+          {"field": "Year", "type": "quantitative", "title": "Year", "format": "d"},
+          {"field": "Group", "type": "nominal", "title": "Taxonomic Group"},
+          {"field": "Relative_Abundance", "type": "quantitative", "title": "Abundance Index", "format": ".2f"}
         ]
       }
     }

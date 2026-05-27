@@ -51,7 +51,7 @@
       "as": "Percent_Protected"
     },
     {
-      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE",
+      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE == 'JBT' ? 'Jervis Bay Territory' : datum.STATE",
       "as": "State_Full"
     },
     {

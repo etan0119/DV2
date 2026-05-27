@@ -67,15 +67,15 @@
   "layer": [
     {
       "transform": [
-        {"filter": "datum.GAZ_DATE != null && datum.GAZ_AREA > 0"},
+        {"filter": "datum.GAZ_DATE != null && datum.GIS_AREA > 0"},
         {"calculate": "year(datum.GAZ_DATE)", "as": "Year"},
         {"filter": "datum.Year <= 2024"},
         {"filter": "State_selection == null || datum.STATE == State_selection"},
-        {"aggregate": [{"op": "sum", "field": "GAZ_AREA", "as": "Total_Area"}], "groupby": ["Year"]},
+        {"aggregate": [{"op": "sum", "field": "GIS_AREA", "as": "Total_Area"}], "groupby": ["Year"]},
         {"impute": "Total_Area", "key": "Year", "keyvals": [2024], "value": 0},
         {"sort": [{"field": "Year"}], "window": [{"op": "sum", "field": "Total_Area", "as": "Cumulative_Area"}]}
       ],
-      "mark": {"type": "area", "color": "#1a4301", "line": true, "opacity": 0.7},
+      "mark": {"type": "area", "color": "#1a4301", "line": true, "opacity": 0.7, "interpolate": "step-after"},
       "encoding": {
         "x": {
           "field": "Year",
@@ -99,8 +99,15 @@
       }
     },
     {
-      "data": {"values": [{"Year": 1999, "Cumulative_Area": 50000000, "Text": "EPBC Act 1999"}]},
-      "mark": {"type": "text", "align": "left", "dx": 5, "dy": -100, "color": "#d95f02", "fontWeight": "bold"},
+      "data": {"values": [{"Year": 1999, "Text": "EPBC Act 1999"}]},
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "y": 20,
+        "color": "#d95f02",
+        "fontWeight": "bold"
+      },
       "encoding": {
         "x": {"field": "Year", "type": "quantitative"},
         "text": {"field": "Text"}
