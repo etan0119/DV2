@@ -85,7 +85,13 @@
             "color": {
               "field": "State_Full",
               "type": "nominal",
-              "legend": {"orient": "right", "title": "State/Territory", "titleLimit": 200}
+              "legend": {
+                "orient": "bottom",
+                "title": "State/Territory",
+                "columns": 5,
+                "titleLimit": 400,
+                "offset": 20
+              }
             },
             "opacity": {
               "condition": [
@@ -130,7 +136,7 @@
           },
           "encoding": {
             "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude (Degrees South)"},
-            "y": {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)"},
+            "y": {"field": "Mean_Area", "type": "quantitative", "title": "Area (ha, Log Scale)"},
             "tooltip": [
               {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
               {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)", "format": ","}
@@ -207,7 +213,7 @@
           },
           "encoding": {
             "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude (Degrees South)"},
-            "y": {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)"},
+            "y": {"field": "Mean_Area", "type": "quantitative", "title": null},
             "tooltip": [
               {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
               {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)", "format": ","}

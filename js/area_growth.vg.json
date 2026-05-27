@@ -3,7 +3,8 @@
   "title": {
     "text": "The Accelerating Expansion of Conservation",
     "subtitle": "Cumulative Protected Area over Time (Hectares)",
-    "anchor": "start"
+    "anchor": "start",
+    "offset": 20
   },
   "width": "container",
   "height": 400,

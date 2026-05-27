@@ -1,8 +1,14 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "padding": {"top": 10, "bottom": 10, "left": 10, "right": 20},
   "title": {
-    "text": "Protected Area Count by State and Environment",
-    "anchor": "start"
+    "text": "A Patchwork of Protection",
+    "subtitle": "Protected Area Count by State and Environment",
+    "anchor": "start",
+    "offset": 20,
+    "dx": 20,
+    "limit": 1000,
+    "subtitleLimit": 1000
   },
   "width": "container",
   "height": 300,

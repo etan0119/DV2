@@ -205,7 +205,11 @@ section {
 }
 
 .scrolly-step:last-child {
-  margin-bottom: 0;
+  margin-bottom: 60vh;
+}
+
+.scrolly-step:first-child {
+  margin-top: 15vh;
 }
 
 .scrolly-step h2, .scrolly-step h3 {
