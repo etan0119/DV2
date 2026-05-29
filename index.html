@@ -167,7 +167,7 @@
       <div class="footer-col" style="text-align: right;">
         <h3>Credits</h3>
         <p>Created by: Eric Tan Chen Hee</p>
-        <p>Date: May 2026</p>
+        <p>Last Updated: <span id="last-updated">29 May 2026</span></p>
         <p>Coursework: FIT2179 Monash University</p>
         <p><a href="https://github.com/etan0119/DV2">View on GitHub</a></p>
       </div>
@@ -232,6 +232,18 @@
         observer.observe(step);
       });
     }
+
+    // Fetch last commit date from GitHub API
+    fetch('https://api.github.com/repos/etan0119/DV2/commits?per_page=1')
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const commitDate = new Date(data[0].commit.committer.date);
+          const options = { day: 'numeric', month: 'long', year: 'numeric' };
+          document.getElementById('last-updated').textContent = commitDate.toLocaleDateString('en-AU', options);
+        }
+      })
+      .catch(err => console.error('Error fetching commit date:', err));
   </script>
 
 </body>
