@@ -1,10 +1,20 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 550,
+  "background": "#f0f8ff",
   "title": {
-    "text": "Gap Analysis: Terrestrial vs. Marine Latitudinal Trends",
-    "subtitle": "Mean Area trend per latitude (Log Scale)",
+    "text": "State-by-State Conservation Gap Analysis",
+    "subtitle": {
+      "signal": "active_step == 1 ? 'Terrestrial Protection Coverage (% of land protected)' : active_step == 2 ? 'State Marine Sanctuaries (Total area in hectares)' : 'Mean Terrestrial Park Size (Deserts vs. Southern fragments)'"
+    },
     "anchor": "start",
     "offset": 20
+  },
+  "projection": {
+    "type": "mercator",
+    "center": [133.7751, -25.2744],
+    "scale": 700
   },
   "config": {
     "font": "Open Sans",
@@ -12,12 +22,6 @@
       "font": "Montserrat",
       "fontSize": 16,
       "fontWeight": "bold"
-    },
-    "axis": {
-      "labelFont": "Open Sans",
-      "titleFont": "Montserrat",
-      "titleFontSize": 12,
-      "titleFontWeight": "bold"
     },
     "legend": {
       "titleFont": "Montserrat",
@@ -27,200 +31,77 @@
     },
     "view": {"stroke": null}
   },
-  "data": {
-    "url": "data/capad_metadata.csv",
-    "format": {"type": "csv"}
-  },
   "params": [
     {
       "name": "active_step",
       "value": 1
     }
   ],
+  "data": {
+    "url": "https://raw.githubusercontent.com/tonywr71/GeoJson-Data/master/australian-states.json",
+    "format": {"type": "json", "property": "features"}
+  },
   "transform": [
     {
-      "filter": "datum.GIS_AREA > 0 && datum.LATITUDE != null"
+      "lookup": "properties.STATE_NAME",
+      "from": {
+        "data": {
+          "url": "data/state_gap_metrics.csv",
+          "format": {
+            "type": "csv",
+            "parse": {
+              "Terrestrial_Protected_Percent": "number",
+              "Terrestrial_Protected_ha": "number",
+              "Land_Area_ha": "number",
+              "Marine_Protected_ha": "number",
+              "Marine_Count": "number",
+              "Mean_Terrestrial_Size_ha": "number",
+              "Terrestrial_Count": "number"
+            }
+          }
+        },
+        "key": "STATE_NAME",
+        "fields": [
+          "Terrestrial_Protected_Percent",
+          "Terrestrial_Protected_ha",
+          "Land_Area_ha",
+          "Marine_Protected_ha",
+          "Marine_Count",
+          "Mean_Terrestrial_Size_ha",
+          "Terrestrial_Count"
+        ]
+      }
     },
     {
-      "calculate": "datum.STATE == 'VIC' ? 'Victoria' : datum.STATE == 'NSW' ? 'New South Wales' : datum.STATE == 'QLD' ? 'Queensland' : datum.STATE == 'SA' ? 'South Australia' : datum.STATE == 'WA' ? 'Western Australia' : datum.STATE == 'TAS' ? 'Tasmania' : datum.STATE == 'NT' ? 'Northern Territory' : datum.STATE == 'ACT' ? 'Australian Capital Territory' : datum.STATE == 'COM' ? 'Commonwealth' : datum.STATE == 'EXT' ? 'External Territory' : datum.STATE == 'JBT' ? 'Jervis Bay Territory' : datum.STATE",
-      "as": "State_Full"
-    },
-    {
-      "calculate": "datum.ENVIRON == 'T' ? 'Terrestrial' : 'Marine'",
-      "as": "Env_Full"
-    },
-    {
-      "calculate": "floor(datum.LATITUDE)",
-      "as": "Lat_Bin"
+      "calculate": "active_step == 1 ? datum.Terrestrial_Protected_Percent : active_step == 2 ? max(datum.Marine_Protected_ha, 0.1) : datum.Mean_Terrestrial_Size_ha",
+      "as": "Map_Value"
     }
   ],
-  "hconcat": [
-    {
-      "title": "Terrestrial Reserves",
-      "transform": [{"filter": "datum.Env_Full == 'Terrestrial'"}],
-      "width": 260,
-      "height": 400,
-      "layer": [
-        {
-          "params": [
-            {
-              "name": "State_Selection",
-              "select": {"type": "point", "fields": ["State_Full"]},
-              "bind": "legend"
-            }
-          ],
-          "mark": {"type": "point", "filled": true},
-          "encoding": {
-            "x": {
-              "field": "LATITUDE",
-              "type": "quantitative",
-              "title": "Latitude (Degrees South)"
-            },
-            "y": {
-              "field": "GIS_AREA",
-              "type": "quantitative",
-              "scale": {"type": "log"},
-              "title": "Area (ha, Log Scale)"
-            },
-            "color": {
-              "field": "State_Full",
-              "type": "nominal",
-              "legend": {
-                "orient": "bottom",
-                "title": "State/Territory",
-                "columns": 5,
-                "titleLimit": 400,
-                "offset": 20
-              }
-            },
-            "opacity": {
-              "condition": [
-                {
-                  "test": "active_step == 2 && (datum.STATE == 'COM' || datum.STATE == 'EXT')",
-                  "value": 0.8
-                },
-                {
-                  "test": "active_step == 3 && (datum.STATE != 'COM' && datum.STATE != 'EXT')",
-                  "value": 0.8
-                },
-                {
-                  "test": "active_step == 1",
-                  "condition": {"param": "State_Selection", "value": 0.3},
-                  "value": 0.25
-                }
-              ],
-              "value": 0.15
-            },
-            "size": {"value": 15},
-            "tooltip": [
-              {"field": "NAME", "type": "nominal", "title": "Sanctuary Name"},
-              {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
-              {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
-            ]
-          }
-        },
-        {
-          "transform": [
-            {"filter": "active_step == 1 || (active_step == 2 && (datum.STATE == 'COM' || datum.STATE == 'EXT')) || (active_step == 3 && (datum.STATE != 'COM' && datum.STATE != 'EXT'))"},
-            {
-              "aggregate": [{"op": "mean", "field": "GIS_AREA", "as": "Mean_Area"}],
-              "groupby": ["Lat_Bin"]
-            }
-          ],
-          "mark": {
-            "type": "line",
-            "strokeWidth": 3,
-            "opacity": 0.8,
-            "color": "#d95f02",
-            "tooltip": true
-          },
-          "encoding": {
-            "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude (Degrees South)"},
-            "y": {"field": "Mean_Area", "type": "quantitative", "title": "Area (ha, Log Scale)"},
-            "tooltip": [
-              {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
-              {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)", "format": ","}
-            ]
-          }
-        }
-      ]
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "color": {
+      "field": "Map_Value",
+      "type": "quantitative",
+      "scale": {
+        "type": "log",
+        "scheme": "yellowgreenblue"
+      },
+      "legend": {
+        "title": {"signal": "active_step == 1 ? 'Land Protected (%)' : active_step == 2 ? 'Marine Protected (ha)' : 'Mean Reserve Size (ha)'"},
+        "orient": "bottom-left",
+        "format": ","
+      }
     },
-    {
-      "title": "Marine Sanctuaries",
-      "transform": [{"filter": "datum.Env_Full == 'Marine'"}],
-      "width": 260,
-      "height": 400,
-      "layer": [
-        {
-          "mark": {"type": "point", "filled": true},
-          "encoding": {
-            "x": {
-              "field": "LATITUDE",
-              "type": "quantitative",
-              "title": "Latitude (Degrees South)"
-            },
-            "y": {
-              "field": "GIS_AREA",
-              "type": "quantitative",
-              "scale": {"type": "log"},
-              "title": null
-            },
-            "color": {
-              "field": "State_Full",
-              "type": "nominal",
-              "legend": null
-            },
-            "opacity": {
-              "condition": [
-                {
-                  "test": "active_step == 2 && (datum.STATE == 'COM' || datum.STATE == 'EXT')",
-                  "value": 0.8
-                },
-                {
-                  "test": "active_step == 3 && (datum.STATE != 'COM' && datum.STATE != 'EXT')",
-                  "value": 0.8
-                },
-                {
-                  "test": "active_step == 1",
-                  "condition": {"param": "State_Selection", "value": 0.3},
-                  "value": 0.25
-                }
-              ],
-              "value": 0.15
-            },
-            "size": {"value": 15},
-            "tooltip": [
-              {"field": "NAME", "type": "nominal", "title": "Sanctuary Name"},
-              {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
-              {"field": "GIS_AREA", "type": "quantitative", "title": "Area (ha)", "format": ","}
-            ]
-          }
-        },
-        {
-          "transform": [
-            {"filter": "active_step == 1 || (active_step == 2 && (datum.STATE == 'COM' || datum.STATE == 'EXT')) || (active_step == 3 && (datum.STATE != 'COM' && datum.STATE != 'EXT'))"},
-            {
-              "aggregate": [{"op": "mean", "field": "GIS_AREA", "as": "Mean_Area"}],
-              "groupby": ["Lat_Bin"]
-            }
-          ],
-          "mark": {
-            "type": "line",
-            "strokeWidth": 3,
-            "opacity": 0.8,
-            "color": "#d95f02",
-            "tooltip": true
-          },
-          "encoding": {
-            "x": {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude (Degrees South)"},
-            "y": {"field": "Mean_Area", "type": "quantitative", "title": null},
-            "tooltip": [
-              {"field": "Lat_Bin", "type": "quantitative", "title": "Latitude Bin"},
-              {"field": "Mean_Area", "type": "quantitative", "title": "Mean Area (ha)", "format": ","}
-            ]
-          }
-        }
-      ]
-    }
-  ]
+    "tooltip": [
+      {"field": "properties.STATE_NAME", "type": "nominal", "title": "State/Territory"},
+      {"field": "Land_Area_ha", "type": "quantitative", "title": "Total Land Area (ha)", "format": ","},
+      {"field": "Terrestrial_Protected_Percent", "type": "quantitative", "title": "Terrestrial Protected (%)", "format": ".1f"},
+      {"field": "Marine_Protected_ha", "type": "quantitative", "title": "Marine Protected (ha)", "format": ","},
+      {"field": "Mean_Terrestrial_Size_ha", "type": "quantitative", "title": "Mean Terrestrial Size (ha)", "format": ","}
+    ]
+  }
 }
