@@ -103,13 +103,7 @@
       "encoding": {
         "color": {
           "datum": "Marine Sanctuary"
-        },
-        "tooltip": [
-          {"field": "properties.NAME", "type": "nominal", "title": "Name"},
-          {"field": "State_Full", "type": "nominal", "title": "State/Territory"},
-          {"field": "properties.TYPE", "type": "nominal", "title": "Type"},
-          {"field": "properties.IUCN", "type": "nominal", "title": "IUCN Level"}
-        ]
+        }
       }
     }
   ]
