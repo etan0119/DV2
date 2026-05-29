@@ -6,10 +6,12 @@
   "title": {
     "text": "State-by-State Conservation Gap Analysis",
     "subtitle": {
-      "signal": "active_step == 1 ? 'Terrestrial Protection Coverage (% of land protected)' : active_step == 2 ? 'State Marine Sanctuaries (Total area in hectares)' : 'Mean Terrestrial Park Size (Deserts vs. Southern fragments)'"
+      "signal": "active_step == 1 ? 'Terrestrial Protection Coverage (% of land protected)' : active_step == 2 ? 'State Marine Sanctuaries (Total area in hectares)' : 'Mean Terrestrial Park Size (% of State Land Area)'"
     },
     "anchor": "start",
-    "offset": 20
+    "offset": 20,
+    "limit": 1000,
+    "subtitleLimit": 1000
   },
   "projection": {
     "type": "mercator",
@@ -27,7 +29,9 @@
       "titleFont": "Montserrat",
       "titleFontSize": 12,
       "labelFont": "Open Sans",
-      "labelFontSize": 11
+      "labelFontSize": 11,
+      "titleLimit": 400,
+      "labelLimit": 400
     },
     "view": {"stroke": null}
   },
@@ -73,7 +77,11 @@
       }
     },
     {
-      "calculate": "active_step == 1 ? datum.Terrestrial_Protected_Percent : active_step == 2 ? max(datum.Marine_Protected_ha, 0.1) : datum.Mean_Terrestrial_Size_ha",
+      "calculate": "(datum.Mean_Terrestrial_Size_ha / datum.Land_Area_ha) * 100",
+      "as": "Mean_Terrestrial_Size_Percent"
+    },
+    {
+      "calculate": "active_step == 1 ? datum.Terrestrial_Protected_Percent : active_step == 2 ? max(datum.Marine_Protected_ha, 0.1) : datum.Mean_Terrestrial_Size_Percent",
       "as": "Map_Value"
     }
   ],
@@ -91,9 +99,10 @@
         "scheme": "yellowgreenblue"
       },
       "legend": {
-        "title": {"signal": "active_step == 1 ? 'Land Protected (%)' : active_step == 2 ? 'Marine Protected (ha)' : 'Mean Reserve Size (ha)'"},
+        "title": {"signal": "active_step == 1 ? 'Land Protected (%)' : active_step == 2 ? 'Marine Protected (ha)' : 'Mean Reserve Size (% of State)'"},
         "orient": "bottom-left",
-        "format": ","
+        "labelExpr": "active_step == 3 ? format(datum.value, '.4f') + '%' : active_step == 1 ? format(datum.value, '.1f') + '%' : format(datum.value, ',')",
+        "titleLimit": 400
       }
     },
     "tooltip": [
@@ -101,7 +110,8 @@
       {"field": "Land_Area_ha", "type": "quantitative", "title": "Total Land Area (ha)", "format": ","},
       {"field": "Terrestrial_Protected_Percent", "type": "quantitative", "title": "Terrestrial Protected (%)", "format": ".1f"},
       {"field": "Marine_Protected_ha", "type": "quantitative", "title": "Marine Protected (ha)", "format": ","},
-      {"field": "Mean_Terrestrial_Size_ha", "type": "quantitative", "title": "Mean Terrestrial Size (ha)", "format": ","}
+      {"field": "Mean_Terrestrial_Size_ha", "type": "quantitative", "title": "Mean Terrestrial Size (ha)", "format": ","},
+      {"field": "Mean_Terrestrial_Size_Percent", "type": "quantitative", "title": "Mean Terrestrial Size (% of State)", "format": ".4f"}
     ]
   }
 }
