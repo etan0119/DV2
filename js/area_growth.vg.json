@@ -2,7 +2,7 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
     "text": "The Accelerating Expansion of Conservation",
-    "subtitle": "Cumulative Protected Area over Time (Hectares)",
+    "subtitle": "Cumulative Protected Area over Time (Million Hectares)",
     "anchor": "start",
     "offset": 20
   },
@@ -74,7 +74,8 @@
         {"filter": "State_selection == null || datum.STATE == State_selection"},
         {"aggregate": [{"op": "sum", "field": "GIS_AREA", "as": "Total_Area"}], "groupby": ["Year"]},
         {"impute": "Total_Area", "key": "Year", "keyvals": [2024], "value": 0},
-        {"sort": [{"field": "Year"}], "window": [{"op": "sum", "field": "Total_Area", "as": "Cumulative_Area"}]}
+        {"sort": [{"field": "Year"}], "window": [{"op": "sum", "field": "Total_Area", "as": "Cumulative_Area"}]},
+        {"calculate": "datum.Cumulative_Area / 1000000", "as": "Cumulative_Area_M"}
       ],
       "mark": {"type": "area", "color": "#1a4301", "line": true, "opacity": 0.7, "interpolate": "step-after"},
       "encoding": {
@@ -85,10 +86,19 @@
           "axis": {"format": "d"},
           "scale": {"domainMax": 2024, "nice": false}
         },
-        "y": {"field": "Cumulative_Area", "type": "quantitative", "title": "Total Area (Hectares)"},
+        "y": {
+          "field": "Cumulative_Area_M",
+          "type": "quantitative",
+          "title": "Total Area (ha)",
+          "axis": {
+            "format": ".1f",
+            "labelExpr": "datum.value + 'M'"
+          }
+        },
         "tooltip": [
           {"field": "Year", "type": "quantitative", "title": "Year", "format": "d"},
-          {"field": "Cumulative_Area", "type": "quantitative", "title": "Cumulative Area (ha)", "format": ","}
+          {"field": "Cumulative_Area", "type": "quantitative", "title": "Cumulative Area (ha)", "format": ","},
+          {"field": "Cumulative_Area_M", "type": "quantitative", "title": "Cumulative Area (M ha)", "format": ".3f"}
         ]
       }
     },
