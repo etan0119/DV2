@@ -48,12 +48,13 @@
     <section class="chart-section">
       <div class="chart-container-wrapper chart-container-large">
         <div id="tsx_decline_chart" class="chart-container"></div>
-        <p class="chart-note"><strong>Note:</strong> The <span style="color: red; font-weight: bold;">Red Dashed Line (1.0)</span> represents the 1985 baseline. Any value below this line indicates a relative decline in species abundance since the start of monitoring.</p>
+        <p class="chart-note"><strong>Note:</strong> The <span style="color: gray; font-weight: bold;">Grey Dashed Line (1.0)</span> represents the 1985 baseline. Any value below this line indicates a relative decline in species abundance since the start of monitoring.</p>
       </div>
       <div class="text-block">
         <h2>The Paradox of Protection</h2>
         <p>A critical look at the data reveals a troubling trend: while the <em>area</em> of protected land is increasing, the <em>abundance</em> of threatened species continues to plummet. Since 1985, threatened birds, mammals, and plants have seen average declines of <strong>59% to 73%</strong>.</p>
         <p>This suggests that merely drawing lines on a map is insufficient. Invasive species, climate change, and inappropriate fire regimes cross park boundaries, proving that designation without active, well-funded management fails to stop the slide toward extinction.</p>
+        <p><strong>Note on Reptiles:</strong> The stable reptile trend reflects a <em>monitoring bias</em>—dominated by a few highly studied species (like grassland lizards and sea turtles), it masks the decline of unmonitored reptiles. Additionally, reptiles benefit from simple <em>passive protection</em> (banning land clearing), whereas mammals and birds face feral predators requiring active, high-intensity management to survive.</p>
       </div>
     </section>
 
@@ -70,13 +71,31 @@
       </div>
     </section>
 
-    <!-- 30x30 Benchmark Section -->
+    <!-- Threat Management Gap Section -->
     <section class="chart-section">
-      <div id="benchmark_30x30_chart" class="chart-container chart-container-large"></div>
+      <div class="chart-container-wrapper chart-container-large">
+        <div id="management_gap_chart" class="chart-container"></div>
+        <p class="chart-note"><strong>Note:</strong> Active management includes targeted predator control, weed eradication, fire management, or habitat restoration. "No known management" represents populations monitored with no active conservation intervention.</p>
+      </div>
       <div class="text-block">
-        <h2>The 30x30 Race: Is Your State Winning?</h2>
-        <p>Under the <strong>Kunming-Montreal Global Biodiversity Framework</strong>, Australia has committed to protecting 30% of its land and 30% of its seas by 2030. This "30x30" goal is the global gold standard for halting extinction.</p>
-        <p>However, the race is uneven. While the <span style="color: #2ca25f; font-weight: bold;">Green Bars</span> show regions like Tasmania and the ACT have already surged past the finish line, most states remain in the <span style="color: #d95f02; font-weight: bold;">Orange Zone</span>. This chart highlights that the national average is buoyed by a few high-performers, masking the critical need for more reserves in our most populous states.</p>
+        <h2>What Breaches the Sanctuary Walls?</h2>
+        <p>A park boundary is not a shield. Feral cats, invasive weeds, and climate change cross lines on a map effortlessly. For conservation to succeed, designation must be accompanied by active, well-funded management.</p>
+        <p>However, the data reveals a stark management gap: <strong>over 79%</strong> of monitored threatened plants, <strong>92%</strong> of threatened birds, and <strong>100%</strong> of threatened reptiles and amphibians receive no active management in their monitored habitats.</p>
+        <p>Even for mammals (the most actively managed group due to feral predator fences), over <strong>56%</strong> are left completely unmanaged or only partially managed, showing that many sanctuaries are currently "paper parks" with no active shield.</p>
+      </div>
+    </section>
+
+    <!-- Mammal Management Trends Section -->
+    <section class="chart-section">
+      <div class="chart-container-wrapper chart-container-large">
+        <div id="mammal_management_trends_chart" class="chart-container"></div>
+        <p class="chart-note"><strong>Note:</strong> The <span style="color: gray; font-weight: bold;">Grey Dashed Line (1.0)</span> represents the 1985 baseline. Any value below this line indicates a relative decline in species abundance since the start of monitoring.</p>
+      </div>
+      <div class="text-block">
+        <h2>Havens of Hope</h2>
+        <p>Is active conservation actually working? By comparing the abundance trends of threatened mammals inside secure havens versus open landscapes, the answer is a resounding <strong>yes</strong>.</p>
+        <p>The <span style="color: #d62728; font-weight: bold;">Red Line</span> shows that in standard unfenced parks and open landscapes, mammal populations have steadily crashed, showing an average decline of <strong>23.6% since 1985</strong> (and a devastating <strong>44.2% drop since 2000</strong>) due to unrelenting feral cat and fox predation.</p>
+        <p>In contrast, the <span style="color: #2ca25f; font-weight: bold;">Green Line</span> reveals that in secure, predator-free fenced havens and islands, mammal populations have successfully rebounded, standing at over <strong>1.14 times</strong> the baseline in 2022. Fences and active interventions work, proving we can save species when we build secure shields around them.</p>
       </div>
     </section>
 
@@ -166,11 +185,16 @@
     // Area Growth Chart
     vegaEmbed('#area_growth_chart', "js/area_growth.vg.json").catch(console.error);
     
-    // 30x30 Benchmark
-    vegaEmbed('#benchmark_30x30_chart', "js/benchmarking_30x30.vg.json").catch(console.error);
+
     
     // IUCN Distribution
     vegaEmbed('#threatened_species_chart', "js/iucn_distribution.vg.json").catch(console.error);
+    
+    // Threat Management Gap
+    vegaEmbed('#management_gap_chart', "js/threat_management_gap.vg.json").catch(console.error);
+    
+    // Mammal Management Trends
+    vegaEmbed('#mammal_management_trends_chart', "js/mammal_management_trends.vg.json").catch(console.error);
 
     // Gap Analysis (Scrollytelling)
     vegaEmbed('#gap_analysis_chart', "js/gap_analysis.vg.json").then(function(result) {

@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": {
-    "text": "The Paradox of Protection: Increasing Area vs. Declining Species",
-    "subtitle": "Relative Abundance Index (1985 = 1.0) for Threatened Groups",
+    "text": "Havens of Hope: Fenced Sanctuaries vs. Open Parks",
+    "subtitle": "Relative Abundance Index (1985 = 1.0) for Threatened Mammals by active management status",
     "anchor": "start",
     "offset": 20
   },
@@ -26,10 +26,11 @@
       "titleFontSize": 12,
       "labelFont": "Open Sans",
       "labelFontSize": 11
-    }
+    },
+    "view": {"stroke": null}
   },
   "data": {
-    "url": "data/tsx_index.csv",
+    "url": "data/tsx_mammal_management_trends.csv",
     "format": {"type": "csv"}
   },
   "layer": [
@@ -38,14 +39,14 @@
         "type": "rule",
         "strokeDash": [4, 4],
         "color": "gray",
-        "strokeWidth": 2
+        "strokeWidth": 1.5
       },
       "encoding": {
         "y": {"datum": 1.0}
       }
     },
     {
-      "data": {"values": [{"Year": 2022, "Relative_Abundance": 1.0, "Text": "1985 Baseline"}]},
+      "data": {"values": [{"Year": 2022, "Index_Value": 1.0, "Text": "1985 Baseline"}]},
       "mark": {
         "type": "text",
         "align": "right",
@@ -56,12 +57,12 @@
       },
       "encoding": {
         "x": {"field": "Year", "type": "quantitative"},
-        "y": {"field": "Relative_Abundance", "type": "quantitative"},
+        "y": {"field": "Index_Value", "type": "quantitative"},
         "text": {"field": "Text"}
       }
     },
     {
-      "mark": {"type": "line", "point": true},
+      "mark": {"type": "line", "point": true, "strokeWidth": 3},
       "encoding": {
         "x": {
           "field": "Year",
@@ -71,23 +72,30 @@
           "scale": {"zero": false}
         },
         "y": {
-          "field": "Relative_Abundance",
-          "type": "quantitative", 
+          "field": "Index_Value",
+          "type": "quantitative",
           "title": "Relative Abundance Index"
         },
         "color": {
-          "field": "Group",
+          "field": "Management",
           "type": "nominal",
           "scale": {
-            "domain": ["Birds", "Amphibians", "Mammals", "Plants", "Reptiles"],
-            "range": ["#2b8cbe", "#8856a7", "#e34a33", "#2ca25f", "#feb24c"]
+            "domain": [
+              "Fenced Havens & Islands (Predator-Free)",
+              "Standard Open Landscapes (Unfenced/Standard Parks)"
+            ],
+            "range": ["#2ca25f", "#d62728"]
           },
-          "title": "Taxonomic Group"
+          "legend": {
+            "title": "Conservation Management Status",
+            "orient": "bottom",
+            "offset": 20
+          }
         },
         "tooltip": [
           {"field": "Year", "type": "quantitative", "title": "Year", "format": "d"},
-          {"field": "Group", "type": "nominal", "title": "Taxonomic Group"},
-          {"field": "Relative_Abundance", "type": "quantitative", "title": "Abundance Index", "format": ".2f"}
+          {"field": "Management", "type": "nominal", "title": "Management"},
+          {"field": "Index_Value", "type": "quantitative", "title": "Abundance Index", "format": ".2f"}
         ]
       }
     }

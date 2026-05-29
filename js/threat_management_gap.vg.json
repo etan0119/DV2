@@ -1,0 +1,85 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "The Threat Management Gap",
+    "subtitle": "Active conservation management across Australia's monitored threatened species",
+    "anchor": "start",
+    "offset": 20
+  },
+  "width": "container",
+  "height": 300,
+  "config": {
+    "font": "Open Sans",
+    "title": {
+      "font": "Montserrat",
+      "fontSize": 16,
+      "fontWeight": "bold"
+    },
+    "axis": {
+      "labelFont": "Open Sans",
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "titleFontWeight": "bold"
+    },
+    "legend": {
+      "titleFont": "Montserrat",
+      "titleFontSize": 12,
+      "labelFont": "Open Sans",
+      "labelFontSize": 11
+    },
+    "view": {"stroke": null}
+  },
+  "data": {
+    "url": "data/tsx_management_gap.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "calculate": "datum.Management == 'Actively Managed' ? 1 : datum.Management == 'Partially Managed' ? 2 : 3",
+      "as": "Management_Order"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "cornerRadiusEnd": 4
+  },
+  "encoding": {
+    "y": {
+      "field": "TaxonomicGroup",
+      "type": "nominal",
+      "title": null,
+      "sort": ["Mammals", "Plants", "Birds", "Reptiles", "Amphibians"]
+    },
+    "x": {
+      "field": "Percentage",
+      "type": "quantitative",
+      "title": "Percentage of Monitored Species (%)",
+      "scale": {"domain": [0, 100]}
+    },
+    "color": {
+      "field": "Management",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Actively Managed", "Partially Managed", "No Known Management"],
+        "range": ["#2ca25f", "#fe9929", "#d62728"]
+      },
+      "legend": {
+        "title": "Management Category",
+        "orient": "bottom",
+        "offset": 20
+      }
+    },
+    "order": {
+      "field": "Management_Order",
+      "type": "quantitative",
+      "sort": "ascending"
+    },
+    "tooltip": [
+      {"field": "TaxonomicGroup", "type": "nominal", "title": "Taxonomic Group"},
+      {"field": "Management", "type": "nominal", "title": "Management Level"},
+      {"field": "Species_Count", "type": "quantitative", "title": "Species Count", "format": ","},
+      {"field": "Total_Species_Group", "type": "quantitative", "title": "Total Species Monitored", "format": ","},
+      {"field": "Percentage", "type": "quantitative", "title": "Percentage (%)", "format": ".1f"}
+    ]
+  }
+}

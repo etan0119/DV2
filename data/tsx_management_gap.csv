@@ -1,0 +1,16 @@
+TaxonomicGroup,Management,Species_Count,Total_Species_Group,Percentage
+Birds,Actively Managed,5,63,7.94
+Birds,Partially Managed,10,63,15.87
+Birds,No Known Management,48,63,76.19
+Amphibians,Actively Managed,0,26,0.0
+Amphibians,Partially Managed,0,26,0.0
+Amphibians,No Known Management,26,26,100.0
+Mammals,Actively Managed,30,69,43.48
+Mammals,Partially Managed,13,69,18.84
+Mammals,No Known Management,26,69,37.68
+Plants,Actively Managed,36,173,20.81
+Plants,Partially Managed,25,173,14.45
+Plants,No Known Management,112,173,64.74
+Reptiles,Actively Managed,0,24,0.0
+Reptiles,Partially Managed,0,24,0.0
+Reptiles,No Known Management,24,24,100.0
